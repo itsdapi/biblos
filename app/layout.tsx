@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Header from "@/app/ui/header";
 import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
+import "reflect-metadata";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import React from "react";
 

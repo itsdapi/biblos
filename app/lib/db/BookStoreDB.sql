@@ -13,13 +13,13 @@ GO
 CREATE DATABASE BookStoreDB
 ON PRIMARY
  (name='bookstore',
- filename='d:\sqlwork\bookstore.mdf',
+ filename='c:\database\bookstore.mdf',
  size=5,
  maxsize=20,
  filegrowth=1)
 LOG ON
 (name='bookstorelog',
-filename='d:\sqlwork\bookstore_log',
+filename='c:\database\bookstore_log',
   size=2,
   maxsize=10,
   filegrowth=1)
@@ -34,7 +34,7 @@ GO
 /*创建职员表  01*/
 CREATE TABLE Employee (
    employeeNo   char(10)  PRIMARY KEY,    /*职员编号*/
-       check (employeeNo like '[E-F][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'), 
+       check (employeeNo like '[E-F][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
    empPassword  varchar(10)  NOT NULL,     /*登陆密码*/
    empName     varchar(20)  NOT NULL,     /*员工姓名*/
    sex          char(2) ,                     /*员工性别, 在‘男’和‘女’中取值*/
@@ -60,14 +60,14 @@ GO
 CREATE TABLE MemberClass(
    memLevel     char(1)   NOT NULL  PRIMARY KEY,  /*VIP等级*/
    levelSum      numeric  NOT NULL,                 /*等级购书额定*/
-   memDiscount  float     NOT NULL,                 /* 享受折扣*/ 
+   memDiscount  float     NOT NULL,                 /* 享受折扣*/
 )
 GO
 /*MemberClass表插入数据 */
-INSERT  MemberClass VALUES('0',100,10)  
-INSERT  MemberClass VALUES('3', 95, 9.5) 
-INSERT  MemberClass VALUES('2', 90, 9) 
-INSERT  MemberClass VALUES('1', 85, 8.5) 
+INSERT  MemberClass VALUES('0',100,10)
+INSERT  MemberClass VALUES('3', 95, 9.5)
+INSERT  MemberClass VALUES('2', 90, 9)
+INSERT  MemberClass VALUES('1', 85, 8.5)
 GO
 
 /*创建会员表  03*/
@@ -104,7 +104,7 @@ CREATE TABLE Press(
    pressName    varchar(20)  NOT NULL,  /*出版社名称*/
    address       varchar(40)  NOT NULL,  /*出版社地址*/
    zipCode      char(6),                  /*邮政编码*/
-   contactPerson  varchar(12),              /*联系人*/ 
+   contactPerson  varchar(12),              /*联系人*/
    telephone     varchar(15),              /*联系电话*/
    fax          varchar(15),              /*传真*/
    email        varchar(20) ,              /*电子邮箱*/
@@ -143,7 +143,7 @@ INSERT Book VALUES('97871210664431111','加密与解密（第三版）','段钢'
 INSERT Book VALUES('97875327469341111','时间现象学的基本概念','黑尔德著，靳希平等', '20081201','1','自然科学/天文学','18','15','0.85', '此书由克劳斯•黑尔德教授在北大的6个讲座组成。这些讲座主要梳理了从毕达哥拉斯学派至胡塞尔及海德格尔的现象学对时间问题的探讨。','第一讲 作为数字的时间——毕达哥拉斯学派的时间观念,第二讲 时间和永恒的古代形而上学,第三讲 胡塞尔和海德格尔的本已时间,第四讲 判断力的长处与弱点,第五讲 希望现象学,第六讲 世代生成的时间经验','7-5327')
 INSERT Book VALUES('97871151756251111','深入浅出MySQL数据库开发','唐汉明等编著', '20080401','1','计算机/网络/数据库','60','59','45','从数据库的基础、开发、优化、管理维护4个方面对MySQL进行了详细的介绍','第1章 MySQL的安装与配置,第2章 SQL基础,第3章 MySQL支持的数据类型,第4章 MySQL中的运算符,第5章 常用函数,第6章 图形化工具的使用等31章','7-102')
 INSERT Book VALUES('97871210403441111','思科实验室路由、交换实验指南','梁广民，王隆杰编著', '20070401','1','计算机/网络','36','55','0.9','本书以Cisco2821路由器、Catalyst3560 和Catalyst2950交换机为平台，以Cisco　IOS（12.4版本）为软件平台，以实验为依托，从实际应用的角度介绍了网络工程中使用的技术。','第1章 实验拓扑、终端服务器配置,第2章 路由器基本配置,第3章 静态路由,第4章 RIP,第5章 EIGR等25章','7-1210')
-INSERT Book VALUES('97872000633321111','魔法诱惑','刘谦','20060101','1','家居/休闲游戏','55','18','0.8', '数十种神奇魔术全程大揭秘！让你成为高手中的高手.','脉博测谎术,敏锐的手指,超级空手道,数学读心术,杯子上的硬币,魔术师自语之一,魔术的魅力,如何可观赏及表演魔术等','7-107') 
+INSERT Book VALUES('97872000633321111','魔法诱惑','刘谦','20060101','1','家居/休闲游戏','55','18','0.8', '数十种神奇魔术全程大揭秘！让你成为高手中的高手.','脉博测谎术,敏锐的手指,超级空手道,数学读心术,杯子上的硬币,魔术师自语之一,魔术的魅力,如何可观赏及表演魔术等','7-107')
 GO
 
 /*创建留言表  06*/
@@ -185,7 +185,7 @@ INSERT MessageReply VALUES('LY00000003','R003','E000000002','M000000007','200701
 INSERT MessageReply VALUES('LY00000004','R004','E000000005','M000000001',null,null)
 INSERT MessageReply VALUES('LY00000005','R005','E000000003','M000000008','20071128','我们将努力改进')
 INSERT MessageReply VALUES('LY00000006','R006','E000000006','M000000001',null,null)
-GO	  
+GO
 
 /*创建订单表  08*/
 CREATE TABLE OrderSheet(
@@ -216,8 +216,8 @@ INSERT OrderSheet VALUES('200801010000007','M000000001','E000000004','20080806',
 INSERT OrderSheet VALUES('200801010000008','M000000005','E000000001','20081009',null,null,0.9,'L', 'Y','C','杭州信佳食品有限公司')
 INSERT OrderSheet VALUES('200801010000009','M000000006','E000000006','20090211',null,null,0.85,'S', 'N','B','厦门大学')
 INSERT OrderSheet VALUES('200801010000010','M000000004','E000000002','20090301',null,null,0.9,'L', 'Y','D','重庆晴雨服装有限公司')
-GO	
-  
+GO
+
 /*创建订单明细表   09*/
 CREATE TABLE OrderBook(
    orderNo      char(15)     NOT NULL,    /*订单编号*/
@@ -243,18 +243,18 @@ INSERT OrderBook VALUES('200801010000007','97871210403441111',5,55,null,0.9,null
 GO
 /*计算OrderBook表中的应收金额和实收金额:*/
 update OrderBook
-set amtReceivable =quantity *price ,paidAmt =(quantity *price)*bookDiscount 
+set amtReceivable =quantity *price ,paidAmt =(quantity *price)*bookDiscount
 GO
 /*计算OrderSheet表中的应收总金额*/
 update OrderSheet
 set tolAmtReceiva =sumPaidAmt
 from OrderSheet a,(select orderNo,sum(paidAmt) sumPaidAmt
                    from OrderBook group by orderNo) b
-where a.orderNo=b.orderNo 
+where a.orderNo=b.orderNo
 GO
 /*计算OrderSheet表中的实收总金额:*/
 update OrderSheet
-set tolPaidAmount =tolAmtReceiva*memDiscount 
+set tolPaidAmount =tolAmtReceiva*memDiscount
 GO
 
 /*创建配送公司表  10*/
@@ -267,7 +267,7 @@ CREATE TABLE Company(
    telephone       varchar(15),             	/*联系电话*/
    fax            varchar(20) ,                /*传真*/
    email          varchar(20) ,                /*电子邮箱*/
-) 
+)
 GO
 /*Company表插入数据*/
 INSERT Company VALUES('CM0001','上海中驿快递','上海市浦东路16号','201411','李海平', '15954782541','021-63654556','shzhongyi@126.com')
@@ -399,7 +399,7 @@ CREATE TABLE StoreBook(
    ISBN       char(17)   NOT NULL,    /*图书编号*/
    quantity     int 	    NOT NULL,    /*入库数量*/
    PRIMARY KEY (purchasNo, storeNo, ISBN),
-   FOREIGN KEY (purchasNo,storeNo) REFERENCES StoreSheet (purchasNo,storeNo),  
+   FOREIGN KEY (purchasNo,storeNo) REFERENCES StoreSheet (purchasNo,storeNo),
    FOREIGN KEY (ISBN) REFERENCES Book(ISBN)
 )
 GO

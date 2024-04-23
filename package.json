@@ -18,10 +18,12 @@
     "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "sharp": "^0.33.3"
+    "reflect-metadata": "^0.2.2",
+    "sharp": "^0.33.3",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.12.7",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
