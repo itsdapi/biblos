@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Header from "@/app/ui/header";
+import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NextUIProvider>
+          <AntdRegistry>
+            <header>
+              <Header />
+            </header>
+            <main className={"min-h-screen"}>{children}</main>
+            <footer>footer</footer>
+          </AntdRegistry>
+        </NextUIProvider>
+      </body>
     </html>
   );
 }
