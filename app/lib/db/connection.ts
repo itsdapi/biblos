@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Book } from "@/app/lib/db/models/book";
+import { Book } from "@/app/lib/db/entities/Book";
 import { config } from "@/app.config";
+import { Press } from "@/app/lib/db/entities/Press";
 
 const oracleConnection = new DataSource({
   database: config.db.database,
@@ -15,7 +16,7 @@ const oracleConnection = new DataSource({
   username: config.db.username,
   password: config.db.password,
   sid: config.db.sid,
-  entities: [Book],
+  entities: [Book, Press],
   extra: {
     // Depending on your Oracle client configuration, you might need additional options
   },

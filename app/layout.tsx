@@ -6,6 +6,7 @@ import "./globals.css";
 import "reflect-metadata";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,10 @@ export default function RootLayout({
             <header>
               <Header />
             </header>
-            <main className={"min-h-screen"}>{children}</main>
+            <main className={"min-h-screen container mx-auto"}>
+              <Toaster position="top-center" />
+              {children}
+            </main>
             <footer>footer</footer>
           </AntdRegistry>
         </NextUIProvider>
