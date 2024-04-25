@@ -3,13 +3,12 @@
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Book } from "@/app/lib/db/entities/Book";
 import { Press } from "@/app/lib/db/entities/Press";
-import sleep from "sleep-promise";
 
-export async function getBookList() {
+export async function getAllBooks() {
   const connection = await getDBConnection();
   const bookRepository = connection.getRepository(Book);
-  // console.log(books);
-  return await bookRepository.find();
+  const data = JSON.stringify(await bookRepository.find());
+  return JSON.parse(data) as Book[];
 }
 
 /**
@@ -36,10 +35,5 @@ export async function addBook(
   });
   await bookRepository.save(book);
   console.log(`Book ${bookData.bookTitle} added`);
-  return;
-}
-
-export async function testSubmit(form: any) {
-  console.log("submit", form);
   return;
 }

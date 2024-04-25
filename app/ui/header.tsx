@@ -1,3 +1,9 @@
 export default function Header() {
-  return <div className={"bg-red-200 p-2"}>This is header</div>;
+  return (
+    <div className={"border-b p-5"}>
+      <div className={"container mx-auto"}>
+        <h1>biblos</h1>
+      </div>
+    </div>
+  );
 }

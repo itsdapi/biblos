@@ -28,9 +28,11 @@ export default function RootLayout({
             <header>
               <Header />
             </header>
-            <main className={"min-h-screen container mx-auto"}>
-              <Toaster position="top-center" />
-              {children}
+            <main className={"min-h-screen bg-muted/50"}>
+              <div className={"container mx-auto"}>
+                <Toaster position="top-center" />
+                {children}
+              </div>
             </main>
             <footer>footer</footer>
           </AntdRegistry>

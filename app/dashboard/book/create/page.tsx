@@ -6,7 +6,7 @@ export default async function BookCreate() {
 
   return (
     <main>
-      <h1 className={"text-3xl font-bold py-3 md:border-b md:mb-10"}>
+      <h1 className={"text-3xl font-bold py-3 sm:border-b sm:mb-10"}>
         添加书本
       </h1>
       <BookForm press={pressData} />
