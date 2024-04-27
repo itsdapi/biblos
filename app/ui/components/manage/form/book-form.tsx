@@ -8,7 +8,7 @@ import { Press } from "@/app/lib/db/entities/Press";
 import toast from "react-hot-toast";
 
 export default function BookForm({ press }: { press: Press[] }) {
-  type FieldType = Book & { pressNo: string };
+  type FieldType = Book & { pressId: number };
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (formData: FieldType) => {
@@ -18,13 +18,14 @@ export default function BookForm({ press }: { press: Press[] }) {
       toast.success("添加书籍成功");
       setLoading(false);
     } catch (e) {
+      setLoading(false);
       console.error("Error adding book", e);
       toast.error("添加书籍错误");
     }
   };
 
   return (
-    <div>
+    <div className={'p-2'}>
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -122,11 +123,19 @@ export default function BookForm({ press }: { press: Press[] }) {
           <Input />
         </Form.Item>
 
-        <Form.Item name="pressNo" label="出版社" rules={[{ required: true }]}>
+        <Form.Item<FieldType>
+          label="封面地址"
+          name="coverUrl"
+          rules={[{ required: true, message: "请输入封面地址" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="pressId" label="出版社" rules={[{ required: true }]}>
           <Select placeholder="从下列出版社中选择" allowClear>
             {press.map((p) => (
-              <Select.Option value={p.pressNo} key={p.pressNo}>
-                {p.pressName}
+              <Select.Option value={p.id} key={p.id}>
+                {p.pressName} {p.pressNo}
               </Select.Option>
             ))}
           </Select>

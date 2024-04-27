@@ -1,13 +1,14 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
+import { DataSource, DataSourceOptions } from "typeorm";
 import { Book } from "@/app/lib/db/entities/Book";
 import { config } from "@/app.config";
 import { Press } from "@/app/lib/db/entities/Press";
+import * as userEntities from "@/app/lib/db/entities/User";
 
-const oracleConnection = new DataSource({
+const dbOption: DataSourceOptions = {
   database: config.db.database,
   synchronize: true,
-  logging: true,
+  logging: false,
   migrations: [],
   subscribers: [],
   type: "oracle",
@@ -16,11 +17,10 @@ const oracleConnection = new DataSource({
   username: config.db.username,
   password: config.db.password,
   sid: config.db.sid,
-  entities: [Book, Press],
-  extra: {
-    // Depending on your Oracle client configuration, you might need additional options
-  },
-});
+  entities: [Book, Press, userEntities.UserEntity, userEntities.AccountEntity, userEntities.VerificationTokenEntity, userEntities.SessionEntity],
+};
+
+const oracleConnection = new DataSource(dbOption);
 
 export const getDBConnection = async (): Promise<DataSource> => {
   if (!oracleConnection.isInitialized) {

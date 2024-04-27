@@ -1,14 +1,30 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Press } from "./Press";
 
 @Entity()
 export class Book {
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column({
     type: "char",
     length: 17,
     comment: "书号",
   })
   ISBN!: string;
+
+  @Column({
+    type: "varchar2",
+    length: 200,
+    comment: "图书封面",
+  })
+  coverUrl!: string | null;
 
   @Column({
     type: "varchar2",
@@ -86,6 +102,6 @@ export class Book {
   catalog?: string;
 
   @ManyToOne(() => Press)
-  @JoinColumn({ name: "pressNo" })
-  press?: Press;
+  @JoinColumn({ name: "pressId" })
+  press!: Press;
 }

@@ -1,8 +1,11 @@
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import {Entity, PrimaryColumn, Column, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class Press {
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column({
     type: "varchar2",
     length: 12,
     comment: "出版社编号",

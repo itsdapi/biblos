@@ -9,22 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.6",
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@auth/typeorm-adapter": "^2.0.0",
     "@nextui-org/react": "^2.3.5",
+    "@tailwindcss/forms": "^0.5.7",
     "antd": "^5.16.2",
+    "bcrypt": "^5.1.1",
     "framer-motion": "^11.1.7",
     "next": "14.2.2",
+    "next-auth": "^5.0.0-beta.17",
     "oracledb": "^6.4.0",
     "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.1.0",
     "reflect-metadata": "^0.2.2",
     "sharp": "^0.33.3",
     "sleep-promise": "^9.1.0",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "zod": "^3.23.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.12.7",
     "@types/react": "^18",
     "@types/react-dom": "^18",

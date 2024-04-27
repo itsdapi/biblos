@@ -1,4 +1,4 @@
-import BookForm from "@/app/ui/book-form";
+import BookForm from "@/app/ui/components/manage/form/book-form";
 import { getAllPress } from "@/app/lib/action/press";
 
 export default async function BookCreate() {

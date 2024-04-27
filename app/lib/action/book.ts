@@ -3,10 +3,17 @@
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Book } from "@/app/lib/db/entities/Book";
 import { Press } from "@/app/lib/db/entities/Press";
+import {UserEntity} from "@/app/lib/db/entities/User";
+import {getUserRepository} from "@/app/lib/action/user";
+import {getPressRepository} from "@/app/lib/action/press";
+
+export async function getBookRepository() {
+  const connection = await getDBConnection();
+  return connection.getRepository(Book);
+}
 
 export async function getAllBooks() {
-  const connection = await getDBConnection();
-  const bookRepository = connection.getRepository(Book);
+  const bookRepository = await getBookRepository();
   const data = JSON.stringify(await bookRepository.find());
   return JSON.parse(data) as Book[];
 }
@@ -17,23 +24,30 @@ export async function getAllBooks() {
  * @param bookData
  */
 export async function addBook(
-  bookData: Partial<Book> & { pressNo: string },
+  bookData: Partial<Book> & { pressId: number }
 ): Promise<void> {
-  const connection = await getDBConnection();
-  const bookRepository = connection.getRepository(Book);
-  const pressRepository = connection.getRepository(Press);
-  const press = await pressRepository.findOneBy({ pressNo: bookData.pressNo });
-  console.log("bookData", bookData.pressNo);
+  const {pressId, ...data} = bookData;
+  const bookRepository = await getBookRepository();
+  const pressRepository = await getPressRepository();
+  const press = await pressRepository.findOneBy({ id: pressId });
 
   if (!press) {
     console.error("Press not found");
     return;
   }
+  // console.log("bookData", data);
+
+  // console.log("press", press);
   const book = bookRepository.create({
-    ...bookData,
+    ...data,
     press: press,
   });
-  await bookRepository.save(book);
+  await bookRepository.insert(book);
   console.log(`Book ${bookData.bookTitle} added`);
   return;
+}
+
+export async function getBookCount() {
+  const repo = await getBookRepository();
+  return await repo.count();
 }
