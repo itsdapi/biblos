@@ -12,10 +12,15 @@ export async function getBookRepository() {
   return connection.getRepository(Book);
 }
 
-export async function getAllBooks() {
-  const bookRepository = await getBookRepository();
-  const data = JSON.stringify(await bookRepository.find());
-  return JSON.parse(data) as Book[];
+export async function getAllBooks(skip: number, limit: number) {
+  try {
+    const bookRepository = await getBookRepository();
+    const data = JSON.stringify(await bookRepository.find({skip, take: limit}));
+    return JSON.parse(data) as Book[];
+  } catch (error) {
+    console.error('Fail to get books', error)
+    return []
+  }
 }
 
 /**
@@ -48,6 +53,11 @@ export async function addBook(
 }
 
 export async function getBookCount() {
-  const repo = await getBookRepository();
-  return await repo.count();
+  try {
+    const repo = await getBookRepository();
+    return await repo.count();
+  } catch (error) {
+    console.error('Fail get book count', error)
+    return 0;
+  }
 }

@@ -1,22 +1,32 @@
-import {auth, providerMap, signIn} from "@/auth";
+import { auth, providerMap, signIn } from "@/auth";
 import { Button } from "@nextui-org/react";
 import { VscGithubInverted } from "react-icons/vsc";
-import {ReactNode} from "react";
-import {SiGitee} from "react-icons/si";
-import {FaKey} from "react-icons/fa";
-import {redirect} from "next/navigation";
+import { ReactNode } from "react";
+import { SiGitee } from "react-icons/si";
+import { FaKey } from "react-icons/fa";
+import { redirect } from "next/navigation";
 
 const providerIcons: { [key: string]: ReactNode } = {
-  'GitHub': <VscGithubInverted />,
-  'Gitee': <SiGitee />,
-  'Authentik': <FaKey />
+  GitHub: <VscGithubInverted />,
+  Gitee: <SiGitee />,
+  Authentik: <FaKey />,
 };
 
-export default async function SignInPage() {
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams?: {
+    callbackUrl?: string;
+  };
+}) {
   const session = await auth();
+  let callbackUrl = "/";
+  if (searchParams && searchParams.callbackUrl) {
+    callbackUrl = searchParams.callbackUrl;
+  }
   if (session) {
-    console.log('session exist, redirecting..')
-    redirect('/')
+    console.log("session exist, redirecting..");
+    redirect(callbackUrl);
   }
 
   return (

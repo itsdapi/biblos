@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "antd";
 import { config } from "@/app.config";
 import { PlusOutlined } from "@ant-design/icons";
+import Pagination from "@/app/ui/pagination";
 
 export default function ManageBook() {
   return (
@@ -13,6 +14,7 @@ export default function ManageBook() {
         </Button>
       </Link>
       <Table />
+      <Pagination totalPages={20}/>
     </div>
   );
 }

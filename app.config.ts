@@ -19,12 +19,16 @@ export const config = {
     autho: {
       id: process.env.AUTH_AUTHO_ID,
       secret: process.env.AUTH_AUTHO_SECERT,
-      issuer: process.env.AUTH_AUTHO_ISSUER
-    }
+      issuer: process.env.AUTH_AUTHO_ISSUER,
+    },
   },
   path: {
-    addBook: '/dashboard/book/create',
-    addPress: '/dashboard/press/create',
-    login: '/signin',
-  }
+    addBook: "/dashboard/book/create",
+    addPress: "/dashboard/press/create",
+    adminPanel: "/dashboard",
+    login: "/signin",
+  },
+  route: {
+    protected: ["/dashboard"],
+  },
 };
