@@ -1,16 +1,24 @@
 import { User } from "@nextui-org/user";
 import { DefaultSession } from "next-auth";
+import { Tooltip } from "@nextui-org/react";
+import UserDetailPopover from "@/app/ui/components/user-detail-popover";
+import { IUser } from "@/app/lib/type";
 
-export interface UserInfoProps extends Pick<DefaultSession, "user"> {}
-
-export default function UserInfo({ user }: UserInfoProps): JSX.Element {
-  return user ? (
-    <User
-      name={user.name}
-      description={user.email}
-      avatarProps={{ src: user.image ? user.image : "" }}
-    />
-  ) : (
-    <div>user undefined</div>
+export default function UserInfo({ user }: { user?: IUser }): JSX.Element {
+  return (
+    <div>
+      {user && (
+        <Tooltip
+          content={<UserDetailPopover user={user} />}
+          placement={"bottom-end"}
+        >
+          <User
+            name={user.name}
+            description={user.email}
+            avatarProps={{ src: user.image ? user.image : "" }}
+          />
+        </Tooltip>
+      )}
+    </div>
   );
 }

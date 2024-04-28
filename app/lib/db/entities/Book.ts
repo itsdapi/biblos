@@ -101,6 +101,9 @@ export class Book {
   })
   catalog?: string;
 
+  @Column()
+  pressId!: number;
+
   @ManyToOne(() => Press)
   @JoinColumn({ name: "pressId" })
   press!: Press;

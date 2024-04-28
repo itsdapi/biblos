@@ -58,11 +58,11 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        'bloom': '0px 15px 38px -21px rgba(0,0,0,0.22)'
-      }
+        bloom: "0px 15px 38px -21px rgba(0,0,0,0.22)",
+      },
     },
   },
   darkMode: "class",
-  plugins: [nextui(), require("@tailwindcss/forms")],
+  plugins: [nextui({ addCommonColors: true }), require("@tailwindcss/forms")],
 };
 export default config;

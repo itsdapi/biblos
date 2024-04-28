@@ -6,6 +6,7 @@ import {
   OneToMany,
   ValueTransformer,
 } from "typeorm";
+import { Role } from "@/app/lib/type";
 
 const transformer: Record<"date" | "bigint", ValueTransformer> = {
   date: {
@@ -41,10 +42,10 @@ export class UserEntity {
   image!: string | null;
 
   @Column({ type: "varchar2", length: 255, nullable: true, default: 1 })
-  role!: string | null;
+  role!: Role;
 
-  @Column({ type: "varchar2", length: 60, nullable: true })
-  password!: string | null;
+  @Column({ default: 0 })
+  xp!: number;
 
   @OneToMany(() => SessionEntity, (session) => session.userId)
   sessions!: SessionEntity[];

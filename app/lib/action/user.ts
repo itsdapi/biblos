@@ -2,63 +2,12 @@
 
 import { getDBConnection } from "@/app/lib/db/connection";
 import { UserEntity } from "@/app/lib/db/entities/User";
-import { checkPassword, hashPassword } from "@/app/lib/utils";
 import { Role } from "@/app/lib/type";
-import {getBookRepository} from "@/app/lib/action/book";
-import {getPressRepository} from "@/app/lib/action/press";
+import { getLevelDefinition } from "@/app/lib/action/setting";
 
 export async function getUserRepository() {
   const connection = await getDBConnection();
   return connection.getRepository(UserEntity);
-}
-
-
-export async function getUser(name: string) {
-  const userRepository = await getUserRepository();
-  const data = JSON.stringify(
-    userRepository.findOne({
-      select: ["id", "name", "image", "email"],
-      where: { name },
-    }),
-  );
-  return JSON.parse(data) as Pick<
-    UserEntity,
-    "id" | "name" | "image" | "email"
-  >;
-}
-
-export async function validateUser(id: string, password: string) {
-  const userRepository = await getUserRepository();
-  const hashedPassword = await userRepository.findOne({
-    select: ["password"],
-    where: { id },
-  });
-  if (!hashedPassword) {
-    console.error("User not found!");
-    return false;
-  }
-  if (!hashedPassword.password) {
-    console.error("Passwords in db is null!");
-    return false;
-  }
-  return await checkPassword(password, hashedPassword.password);
-}
-
-export async function createUser(
-  name: string,
-  email: string,
-  password: string,
-) {
-  const userRepository = await getUserRepository();
-  const hashedPassword = await hashPassword(password);
-  const user = userRepository.create({
-    name,
-    email,
-    password: hashedPassword,
-  });
-  await userRepository.save(user);
-  console.log(`User ${user.name} created`);
-  return;
 }
 
 export async function changeUserRole(id: string, role: Role) {
@@ -67,7 +16,6 @@ export async function changeUserRole(id: string, role: Role) {
   if (!user) {
     throw new Error("User not found!");
   }
-
   user.role = role;
   console.log(`User ${user.name} updated role to ${role}`);
   return;
@@ -76,4 +24,20 @@ export async function changeUserRole(id: string, role: Role) {
 export async function getUserCount() {
   const repo = await getUserRepository();
   return await repo.count();
+}
+
+export async function getLevelByXp(xp: number) {
+  const xpThresholds = await getLevelDefinition();
+  if (!xpThresholds) {
+    console.error("level_definition not defined in db!");
+    return 0;
+  }
+  for (let i = 0; i < xpThresholds.length; i++) {
+    if (xp < xpThresholds[i]) {
+      // Return the level number, which is the index + 1 because levels start from 1
+      return i;
+    }
+  }
+  // Return the highest level + 1 if XP exceeds all defined thresholds
+  return xpThresholds.length + 1;
 }

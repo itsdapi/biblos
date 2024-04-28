@@ -1,19 +1,16 @@
 import { User } from "next-auth";
 
 export enum Role {
-  // 封禁用户
-  'banned' = '0',
-
-  // 普通会员
-  'user' = '1',
-
-  // 员工
-  'employee' = '2',
-
-  // 系统管理员
-  'admin' = '3',
+  "封禁用户",
+  "注册会员",
+  "员工",
+  "超级打工人",
 }
 
 export interface IUser extends User {
   role: Role;
+  xp: number;
+  user: User;
 }
+
+export type TXpThresholds = number[];

@@ -1,12 +1,12 @@
 import BookItem from "@/app/ui/components/book-item";
-import {getAllBooks} from "@/app/lib/action/book";
+import { getAllBooks } from "@/app/lib/action/book";
 
 export default async function BookList() {
-  const [books] = await Promise.all([getAllBooks()]);
+  const [books] = await Promise.all([getAllBooks(0, 10)]);
 
-  return <div className={'flex flex-row gap-4'}>
-    {
-      books.map((book) => (
+  return (
+    <div className={"flex flex-row gap-4"}>
+      {books.map((book) => (
         <BookItem
           cover={book.coverUrl}
           key={book.ISBN}
@@ -14,7 +14,7 @@ export default async function BookList() {
           price={book.price}
           stock={book.stockNumber}
         />
-      ))
-    }
-  </div>
+      ))}
+    </div>
+  );
 }

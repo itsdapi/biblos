@@ -4,40 +4,38 @@ import { Button, Form, Input } from "antd";
 import React, { useState } from "react";
 import { Press } from "@/app/lib/db/entities/Press";
 import toast from "react-hot-toast";
-import {addPress} from "@/app/lib/action/press";
-import {addBook} from "@/app/lib/action/book";
+import { addOrEditPress } from "@/app/lib/action/press";
+import { addOrEditBook } from "@/app/lib/action/book";
+import useManageForm from "@/app/lib/hook/use-manage-form";
+import { config } from "@/app.config";
 
-export default function PressForm() {
+export default function PressForm({ press }: { press?: Press }) {
   type FieldType = Press;
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (formData: FieldType) => {
-    try {
-      setLoading(true);
-      await addPress(formData);
-      toast.success("添加出版社成功");
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      console.error("Error adding press", e);
-      toast.error("添加出版社错误");
-    }
-  };
+  const { form, onSubmit, loading } = useManageForm(addOrEditPress, {
+    prevData: press,
+    desc: "出版社",
+    redirectUrl: config.path.adminPress,
+  });
 
   return (
-    <div className={'p-2'}>
+    <div className={"p-2"}>
       <Form
         name="basic"
+        form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
         initialValues={{ remember: true }}
-        onFinish={handleSubmit}
+        onFinish={onSubmit}
         autoComplete="off"
       >
+        <Form.Item<FieldType> label="ID" name="id">
+          <Input disabled placeholder={"自动生成书本ID"} />
+        </Form.Item>
+
         <Form.Item<FieldType>
           label="出版社编号"
-          name='pressNo'
+          name="pressNo"
           rules={[{ required: true, message: "请输入出版社编号" }]}
         >
           <Input />

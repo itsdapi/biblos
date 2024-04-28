@@ -2,39 +2,44 @@
 
 import { Button, Form, Input, Select } from "antd";
 import { Book } from "@/app/lib/db/entities/Book";
-import React, { useState } from "react";
-import { addBook } from "@/app/lib/action/book";
+import React, { useEffect, useState } from "react";
+import { addOrEditBook } from "@/app/lib/action/book";
 import { Press } from "@/app/lib/db/entities/Press";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { config } from "@/app.config";
+import useManageForm from "@/app/lib/hook/use-manage-form";
 
-export default function BookForm({ press }: { press: Press[] }) {
+export default function BookForm({
+  press,
+  book,
+}: {
+  press: Press[];
+  book?: Book;
+}) {
   type FieldType = Book & { pressId: number };
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (formData: FieldType) => {
-    try {
-      setLoading(true);
-      await addBook(formData);
-      toast.success("添加书籍成功");
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      console.error("Error adding book", e);
-      toast.error("添加书籍错误");
-    }
-  };
+  const { form, onSubmit, loading } = useManageForm(addOrEditBook, {
+    prevData: book,
+    desc: "书本",
+    redirectUrl: config.path.adminBook,
+  });
 
   return (
-    <div className={'p-2'}>
+    <div className={"p-2"}>
       <Form
+        form={form}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
         initialValues={{ remember: true }}
-        onFinish={handleSubmit}
+        onFinish={onSubmit}
         autoComplete="off"
       >
+        <Form.Item<FieldType> label="ID" name="id">
+          <Input disabled placeholder={"自动生成书本ID"} />
+        </Form.Item>
+
         <Form.Item<FieldType>
           label="ISBN"
           name="ISBN"
@@ -112,7 +117,7 @@ export default function BookForm({ press }: { press: Press[] }) {
           name="catalog"
           rules={[{ required: true, message: "请输入目录" }]}
         >
-          <Input />
+          <Input.TextArea rows={4} />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -120,7 +125,7 @@ export default function BookForm({ press }: { press: Press[] }) {
           name="introduction"
           rules={[{ required: true, message: "请输入内容简介" }]}
         >
-          <Input />
+          <Input.TextArea rows={4} />
         </Form.Item>
 
         <Form.Item<FieldType>

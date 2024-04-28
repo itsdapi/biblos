@@ -1,3 +1,5 @@
+import "server-only";
+
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import AuthentikProvider from "next-auth/providers/authentik";
@@ -52,7 +54,7 @@ export const providerMap = providers.map((provider) => {
 });
 
 export const { signIn, signOut, auth, handlers } = NextAuth({
-  adapter: TypeORMAdapter(authDbOption,{ entities }),
+  adapter: TypeORMAdapter(authDbOption, { entities }),
   providers,
   pages: {
     signIn: config.path.login,
