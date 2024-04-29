@@ -4,7 +4,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
 import "reflect-metadata";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import React from "react";
+import React, { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,8 +24,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextUIProvider>
           <AntdRegistry>
-            <Toaster position="top-center"/>
-            <main>{children}</main>
+            <Toaster position="top-center" />
+            <Suspense fallback={<div>loading...</div>}>
+              <main>{children}</main>
+            </Suspense>
           </AntdRegistry>
         </NextUIProvider>
       </body>

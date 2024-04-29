@@ -48,7 +48,7 @@ export default async function SignInPage({
               startContent={providerIcons[provider.name]}
               className={"justify-start"}
             >
-              <span>使用 {provider.name} 登陆</span>
+              <span>使用 {provider.name} 登录</span>
             </Button>
           </form>
         ))}

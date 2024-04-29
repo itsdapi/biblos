@@ -35,7 +35,7 @@ GO
 CREATE TABLE Employee (
    employeeNo   char(10)  PRIMARY KEY,    /*职员编号*/
        check (employeeNo like '[E-F][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
-   empPassword  varchar(10)  NOT NULL,     /*登陆密码*/
+   empPassword  varchar(10)  NOT NULL,     /*登录密码*/
    empName     varchar(20)  NOT NULL,     /*员工姓名*/
    sex          char(2) ,                     /*员工性别, 在‘男’和‘女’中取值*/
    birthday      datetime,                    /*出生日期*/
@@ -74,7 +74,7 @@ GO
 CREATE TABLE Member(
    memberNo     char(10)  PRIMARY KEY,   	/*会员编号*/
       check(memberNo like '[M-Z][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
-   memPassword  varchar(10)  NOT NULL,     /*登陆密码*/
+   memPassword  varchar(10)  NOT NULL,     /*登录密码*/
    memName       varchar(20)  NOT NULL,     /*会员姓名*/
    sex           char(2),                    /*会员性别*/
    birthday       datetime,                   /*出生日期*/
