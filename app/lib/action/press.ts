@@ -4,6 +4,7 @@ import { Press } from "@/app/lib/db/entities/Press";
 import { getDBConnection } from "@/app/lib/db/connection";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
+import { Page } from "@/app/lib/type";
 
 export async function getPressRepository() {
   const connection = await getDBConnection();
@@ -18,19 +19,27 @@ export async function addOrEditPress(pressData: Press) {
   return;
 }
 
-export async function getAllPress(skip: number, limit: number) {
+export async function getAllPress(
+  skip: number,
+  limit: number,
+): Promise<Page<Press>> {
   try {
     const pressRepository = await getPressRepository();
-    const data = JSON.stringify(
-      await pressRepository.find({
-        skip,
-        take: limit,
-      }),
-    );
-    return JSON.parse(data) as Press[];
+    const [press, total] = await pressRepository.findAndCount({
+      skip,
+      take: limit,
+    });
+    const data = JSON.stringify(press);
+    return {
+      total,
+      payload: JSON.parse(data),
+    };
   } catch (e) {
     console.error("Error getting all press", e);
-    return [];
+    return {
+      total: 0,
+      payload: [],
+    };
   }
 }
 

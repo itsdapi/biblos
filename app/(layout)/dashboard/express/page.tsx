@@ -1,14 +1,20 @@
-import Link from "next/link";
 import { config } from "@/app.config";
-import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import ManageExpressTable from "@/app/ui/components/manage/table/manage-express-table";
 import { getAllExpress } from "@/app/lib/action/express";
-import RefreshButton from "@/app/ui/button/refresh-button";
 import TableHeader from "@/app/ui/table-header";
+import Pagination from "@/app/ui/pagination";
 
-export default async function ExpressManage() {
-  const [express] = await Promise.all([getAllExpress(0, 10)]);
+export default async function ExpressManage({
+  searchParams,
+}: {
+  searchParams?: { page?: number };
+}) {
+  const itemPerPage = 8;
+  const currentPage = searchParams?.page || 1;
+  const skip = (currentPage - 1) * itemPerPage;
+  const [{ total, payload }] = await Promise.all([
+    getAllExpress(skip, itemPerPage),
+  ]);
   const { adminExpress, addExpress } = config.path;
 
   return (
@@ -18,7 +24,8 @@ export default async function ExpressManage() {
         currPath={adminExpress}
         text={"添加快递公司"}
       />
-      <ManageExpressTable express={express} />
+      <ManageExpressTable express={payload} />
+      <Pagination totalItems={total} itemPerPage={itemPerPage} />
     </div>
   );
 }

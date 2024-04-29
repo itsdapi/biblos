@@ -2,40 +2,46 @@
 
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Book } from "@/app/lib/db/entities/Book";
-import { Press } from "@/app/lib/db/entities/Press";
-import { UserEntity } from "@/app/lib/db/entities/User";
-import { getUserRepository } from "@/app/lib/action/user";
-import { getPressDetailById, getPressRepository } from "@/app/lib/action/press";
+import { getPressDetailById } from "@/app/lib/action/press";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
+import { Page } from "@/app/lib/type";
 
 export async function getBookRepository() {
   const connection = await getDBConnection();
   return connection.getRepository(Book);
 }
 
-export async function getAllBooks(skip: number, limit: number) {
+export async function getAllBooks(
+  skip: number,
+  limit: number,
+): Promise<Page<Book>> {
   try {
     const bookRepository = await getBookRepository();
-    const data = JSON.stringify(
-      await bookRepository.find({
-        skip,
-        take: limit,
-        select: [
-          "id",
-          "ISBN",
-          "bookTitle",
-          "price",
-          "coverUrl",
-          "stockNumber",
-          "author",
-        ],
-      }),
-    );
-    return JSON.parse(data) as Book[];
+    const [books, total] = await bookRepository.findAndCount({
+      skip,
+      take: limit,
+      select: [
+        "id",
+        "ISBN",
+        "bookTitle",
+        "price",
+        "coverUrl",
+        "stockNumber",
+        "author",
+      ],
+    });
+    const data = JSON.stringify(books);
+    return {
+      total,
+      payload: JSON.parse(data) as Book[],
+    };
   } catch (error) {
     console.error("Fail to get books", error);
-    return [];
+    return {
+      total: 0,
+      payload: [],
+    };
   }
 }
 

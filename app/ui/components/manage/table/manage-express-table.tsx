@@ -62,7 +62,7 @@ export default function ManageExpressTable({
       key: "action",
       render: (_: any, record: Express) => (
         <Space size="small">
-          <Link href={`${config.path.editBook}/${record.id}`}>
+          <Link href={`${config.path.editExpress}/${record.id}`}>
             <Button icon={<FaRegEdit />} />
           </Link>
           <Popconfirm

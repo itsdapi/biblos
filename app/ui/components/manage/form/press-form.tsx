@@ -1,11 +1,9 @@
 "use client";
 
 import { Button, Form, Input } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import { Press } from "@/app/lib/db/entities/Press";
-import toast from "react-hot-toast";
 import { addOrEditPress } from "@/app/lib/action/press";
-import { addOrEditBook } from "@/app/lib/action/book";
 import useManageForm from "@/app/lib/hook/use-manage-form";
 import { config } from "@/app.config";
 
@@ -52,7 +50,7 @@ export default function PressForm({ press }: { press?: Press }) {
         <Form.Item<FieldType>
           label="出版社地址"
           name="address"
-          rules={[{ required: true, message: "请输入出版社地址" }]}
+          rules={[{ required: false, message: "请输入出版社地址" }]}
         >
           <Input />
         </Form.Item>
@@ -60,7 +58,7 @@ export default function PressForm({ press }: { press?: Press }) {
         <Form.Item<FieldType>
           label="邮政编码"
           name="zipCode"
-          rules={[{ required: true, message: "请输入邮政编码" }]}
+          rules={[{ required: false, message: "请输入邮政编码" }]}
         >
           <Input />
         </Form.Item>
@@ -68,7 +66,7 @@ export default function PressForm({ press }: { press?: Press }) {
         <Form.Item<FieldType>
           label="联系人"
           name="contactPerson"
-          rules={[{ required: true, message: "请输入联系人" }]}
+          rules={[{ required: false, message: "请输入联系人" }]}
         >
           <Input />
         </Form.Item>
@@ -76,7 +74,7 @@ export default function PressForm({ press }: { press?: Press }) {
         <Form.Item<FieldType>
           label="联系电话"
           name="telephone"
-          rules={[{ required: true, message: "请输入联系电话" }]}
+          rules={[{ required: false, message: "请输入联系电话" }]}
         >
           <Input />
         </Form.Item>
@@ -84,7 +82,7 @@ export default function PressForm({ press }: { press?: Press }) {
         <Form.Item<FieldType>
           label="传真"
           name="fax"
-          rules={[{ required: true, message: "请输入传真" }]}
+          rules={[{ required: false, message: "请输入传真" }]}
         >
           <Input />
         </Form.Item>
@@ -92,7 +90,7 @@ export default function PressForm({ press }: { press?: Press }) {
         <Form.Item<FieldType>
           label="电子邮箱"
           name="email"
-          rules={[{ required: true, message: "请输入email" }]}
+          rules={[{ required: false, message: "请输入email" }]}
         >
           <Input />
         </Form.Item>

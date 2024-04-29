@@ -2,11 +2,9 @@
 
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Express } from "@/app/lib/db/entities/Express";
-import { Press } from "@/app/lib/db/entities/Press";
-import { getPressRepository } from "@/app/lib/action/press";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
-import { getBookRepository } from "@/app/lib/action/book";
+import { Page } from "@/app/lib/type";
 
 export async function getExpressRepository() {
   const connection = await getDBConnection();
@@ -21,19 +19,27 @@ export async function addOrEditExpress(data: Express) {
   return;
 }
 
-export async function getAllExpress(skip: number, limit: number) {
+export async function getAllExpress(
+  skip: number,
+  limit: number,
+): Promise<Page<Express>> {
   try {
     const repo = await getExpressRepository();
-    const data = JSON.stringify(
-      await repo.find({
-        skip,
-        take: limit,
-      }),
-    );
-    return JSON.parse(data) as Express[];
+    const [express, total] = await repo.findAndCount({
+      skip,
+      take: limit,
+    });
+    const data = JSON.stringify(express);
+    return {
+      total,
+      payload: JSON.parse(data),
+    };
   } catch (e) {
     console.error("Error getting all express", e);
-    return [];
+    return {
+      total: 0,
+      payload: [],
+    };
   }
 }
 

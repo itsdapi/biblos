@@ -7,7 +7,6 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Press } from "@/app/lib/db/entities/Press";
 import { deletePressById } from "@/app/lib/action/press";
-import { deleteExpressById } from "@/app/lib/action/express";
 import useExecutor from "@/app/lib/hook/use-executor";
 
 export default function ManagePressTable({ press }: { press: Press[] }) {
@@ -59,7 +58,7 @@ export default function ManagePressTable({ press }: { press: Press[] }) {
       key: "action",
       render: (_: any, record: Press) => (
         <Space size="small">
-          <Link href={`${config.path.editBook}/${record.id}`}>
+          <Link href={`${config.path.editPress}/${record.id}`}>
             <Button icon={<FaRegEdit />} />
           </Link>
           <Popconfirm

@@ -1,25 +1,27 @@
-import Link from "next/link";
 import { config } from "@/app.config";
-import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import { getAllBooks } from "@/app/lib/action/book";
 import ManageBookTable from "@/app/ui/components/manage/table/manage-book-table";
-import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import TableHeader from "@/app/ui/table-header";
+import Pagination from "@/app/ui/pagination";
 
-export default async function BookManage() {
-  const [books] = await Promise.all([getAllBooks(0, 10)]);
+export default async function BookManage({
+  searchParams,
+}: {
+  searchParams?: { page?: number };
+}) {
+  const itemPerPage = 8;
+  const currentPage = searchParams?.page || 1;
+  const skip = (currentPage - 1) * itemPerPage;
+  const [{ total, payload }] = await Promise.all([
+    getAllBooks(skip, itemPerPage),
+  ]);
   const { adminBook, addBook } = config.path;
 
   return (
     <div className={"space-y-4 w-full"}>
-      {/*<Breadcrumbs>*/}
-      {/*  <BreadcrumbItem href={`${config.path.adminBook}`}>*/}
-      {/*    书本管理*/}
-      {/*  </BreadcrumbItem>*/}
-      {/*</Breadcrumbs>*/}
       <TableHeader toPath={addBook} currPath={adminBook} text={"添加书本"} />
-      <ManageBookTable books={books} />
+      <ManageBookTable books={payload} />
+      <Pagination totalItems={total} itemPerPage={itemPerPage} />
     </div>
   );
 }

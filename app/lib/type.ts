@@ -14,3 +14,8 @@ export interface IUser extends User {
 }
 
 export type TXpThresholds = number[];
+
+export type Page<T> = {
+  total: number;
+  payload: T[];
+};

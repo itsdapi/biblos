@@ -2,11 +2,9 @@
 
 import { Button, Form, Input, Select } from "antd";
 import { Book } from "@/app/lib/db/entities/Book";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { addOrEditBook } from "@/app/lib/action/book";
 import { Press } from "@/app/lib/db/entities/Press";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { config } from "@/app.config";
 import useManageForm from "@/app/lib/hook/use-manage-form";
 
@@ -59,7 +57,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="作者"
           name="author"
-          rules={[{ required: true, message: "请输入作者" }]}
+          rules={[{ required: false, message: "请输入作者" }]}
         >
           <Input />
         </Form.Item>
@@ -67,7 +65,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="出版日期"
           name="publishDate"
-          rules={[{ required: true, message: "请输入出版日期" }]}
+          rules={[{ required: false, message: "请输入出版日期" }]}
         >
           <Input />
         </Form.Item>
@@ -75,7 +73,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="版次"
           name="version"
-          rules={[{ required: true, message: "请输入版次" }]}
+          rules={[{ required: false, message: "请输入版次" }]}
         >
           <Input />
         </Form.Item>
@@ -83,7 +81,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="类别"
           name="category"
-          rules={[{ required: true, message: "请输入作者类别" }]}
+          rules={[{ required: false, message: "请输入图书类别" }]}
         >
           <Input />
         </Form.Item>
@@ -107,7 +105,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="图书折扣"
           name="bookDiscount"
-          rules={[{ required: true, message: "请输入图书折扣" }]}
+          rules={[{ required: false, message: "请输入图书折扣" }]}
         >
           <Input />
         </Form.Item>
@@ -115,7 +113,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="目录"
           name="catalog"
-          rules={[{ required: true, message: "请输入目录" }]}
+          rules={[{ required: false, message: "请输入目录" }]}
         >
           <Input.TextArea rows={4} />
         </Form.Item>
@@ -123,7 +121,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="内容简介"
           name="introduction"
-          rules={[{ required: true, message: "请输入内容简介" }]}
+          rules={[{ required: false, message: "请输入内容简介" }]}
         >
           <Input.TextArea rows={4} />
         </Form.Item>
@@ -131,7 +129,7 @@ export default function BookForm({
         <Form.Item<FieldType>
           label="封面地址"
           name="coverUrl"
-          rules={[{ required: true, message: "请输入封面地址" }]}
+          rules={[{ required: false, message: "请输入封面地址" }]}
         >
           <Input />
         </Form.Item>

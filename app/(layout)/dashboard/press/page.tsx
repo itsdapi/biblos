@@ -1,15 +1,20 @@
-import Link from "next/link";
 import { config } from "@/app.config";
-import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import Table from "@/app/ui/table";
 import ManagePressTable from "@/app/ui/components/manage/table/manage-press-table";
 import { getAllPress } from "@/app/lib/action/press";
-import RefreshButton from "@/app/ui/button/refresh-button";
 import TableHeader from "@/app/ui/table-header";
+import Pagination from "@/app/ui/pagination";
 
-export default async function PressManage() {
-  const [press] = await Promise.all([getAllPress(0, 10)]);
+export default async function PressManage({
+  searchParams,
+}: {
+  searchParams?: { page?: number };
+}) {
+  const itemPerPage = 8;
+  const currentPage = searchParams?.page || 1;
+  const skip = (currentPage - 1) * itemPerPage;
+  const [{ total, payload }] = await Promise.all([
+    getAllPress(skip, itemPerPage),
+  ]);
   const { adminPress, addPress } = config.path;
 
   return (
@@ -19,7 +24,8 @@ export default async function PressManage() {
         currPath={adminPress}
         text={"添加出版社"}
       />
-      <ManagePressTable press={press} />
+      <ManagePressTable press={payload} />
+      <Pagination totalItems={total} itemPerPage={itemPerPage} />
     </div>
   );
 }

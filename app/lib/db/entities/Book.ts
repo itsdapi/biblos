@@ -13,66 +13,53 @@ export class Book {
   id!: number;
 
   @Column({
-    type: "char",
     length: 17,
     comment: "书号",
+    nullable: false,
   })
   ISBN!: string;
 
   @Column({
-    type: "varchar2",
-    length: 200,
-    comment: "图书封面",
-  })
-  coverUrl!: string | null;
-
-  @Column({
-    type: "varchar2",
-    length: 30,
-    nullable: false,
+    length: 255,
     comment: "书名",
+    nullable: false,
   })
   bookTitle!: string;
 
   @Column({
-    type: "varchar2",
     length: 40,
-    nullable: false,
+    nullable: true,
     comment: "作者",
   })
-  author!: string;
+  author?: string;
 
   @Column({
-    type: "timestamp",
     nullable: true,
     comment: "出版日期",
   })
-  publishDate!: Date;
+  publishDate?: Date;
 
   @Column({
-    type: "int",
     nullable: true,
     comment: "版次",
   })
-  version!: number;
+  version?: number;
 
   @Column({
-    type: "varchar2",
     length: 20,
     nullable: true,
     comment: "类别",
   })
-  category!: string;
+  category?: string;
 
   @Column({
-    type: "int",
-    nullable: true,
+    nullable: false,
     comment: "库存数量",
   })
   stockNumber!: number;
 
   @Column({
-    type: "number",
+    type: "float",
     nullable: false,
     comment: "定价",
   })
@@ -86,25 +73,30 @@ export class Book {
   bookDiscount?: number;
 
   @Column({
-    type: "varchar2",
-    length: 500,
+    length: 1000,
     nullable: true,
     comment: "内容简介",
   })
   introduction?: string;
 
   @Column({
-    type: "varchar2",
-    length: 500,
+    length: 1000,
     nullable: true,
     comment: "目录",
   })
   catalog?: string;
+
+  @Column({
+    length: 2000,
+    comment: "图书封面",
+    nullable: true,
+  })
+  coverUrl?: string;
 
   @Column()
   pressId!: number;
 
   @ManyToOne(() => Press)
   @JoinColumn({ name: "pressId" })
-  press!: Press;
+  press?: Press;
 }
