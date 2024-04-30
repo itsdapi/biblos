@@ -2,8 +2,12 @@
 
 import { getDBConnection } from "@/app/lib/db/connection";
 import { UserEntity } from "@/app/lib/db/entities/User";
-import { Role } from "@/app/lib/type";
-import { getLevelDefinition } from "@/app/lib/action/setting";
+import { IUser, Role } from "@/app/lib/type";
+import {
+  getLevelDefinition,
+  getUserDiscountDefinition,
+} from "@/app/lib/action/setting";
+import { auth } from "@/auth";
 
 export async function getUserRepository() {
   const connection = await getDBConnection();
@@ -40,4 +44,16 @@ export async function getLevelByXp(xp: number) {
   }
   // Return the highest level + 1 if XP exceeds all defined thresholds
   return xpThresholds.length + 1;
+}
+
+export async function getUserDiscount(): Promise<number> {
+  const session = await auth();
+  const user = session?.user as IUser | undefined;
+  const udd = await getUserDiscountDefinition();
+  if (!user || !udd) {
+    console.error("user or discount definition not found!");
+    return 1;
+  }
+  const level = await getLevelByXp(user.xp);
+  return udd[level];
 }

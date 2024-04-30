@@ -2,11 +2,13 @@ import { auth } from "@/auth";
 import LoginButton from "@/app/ui/button/login-button";
 import UserInfo from "@/app/ui/user-info";
 import LogoutButton from "@/app/ui/button/logout-button";
-import { IUser } from "@/app/lib/type";
+import { IUser, Role } from "@/app/lib/type";
 import { Button } from "antd";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
 import HomeButton from "@/app/ui/button/home-button";
+import { MdShoppingCart } from "react-icons/md";
+import { config } from "@/app.config";
 
 export default async function Header() {
   const session = await auth();
@@ -27,13 +29,14 @@ export default async function Header() {
             <UserInfo user={user} />
             <div className={"gap-2 flex flex-row items-center"}>
               <LogoutButton />
-              {user?.role === "3" && (
-                <div>
-                  <Link href={"/dashboard"}>
-                    <Button icon={<RxDashboard />} />
-                  </Link>
-                </div>
+              {user && user.role > Role["注册会员"] && (
+                <Link href={config.path.adminPanel}>
+                  <Button icon={<RxDashboard />} />
+                </Link>
               )}
+              <Link href={config.path.cart}>
+                <Button icon={<MdShoppingCart />} />
+              </Link>
               <HomeButton />
             </div>
           </div>

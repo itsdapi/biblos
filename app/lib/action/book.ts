@@ -6,6 +6,7 @@ import { getPressDetailById } from "@/app/lib/action/press";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
 import { Page } from "@/app/lib/type";
+import { In } from "typeorm";
 
 export async function getBookRepository() {
   const connection = await getDBConnection();
@@ -88,5 +89,22 @@ export async function getBookCount() {
   } catch (error) {
     console.error("Fail get book count", error);
     return 0;
+  }
+}
+
+export async function getBooksByIds(ids: number[]): Promise<Page<Book>> {
+  try {
+    const repo = await getBookRepository();
+    const [book, total] = await repo.findAndCount({ where: { id: In(ids) } });
+    const data = JSON.stringify(book);
+    return {
+      total,
+      payload: JSON.parse(data),
+    };
+  } catch (e) {
+    return {
+      total: 0,
+      payload: [],
+    };
   }
 }

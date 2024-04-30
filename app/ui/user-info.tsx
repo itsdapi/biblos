@@ -1,5 +1,4 @@
 import { User } from "@nextui-org/user";
-import { DefaultSession } from "next-auth";
 import { Tooltip } from "@nextui-org/react";
 import UserDetailPopover from "@/app/ui/components/user-detail-popover";
 import { IUser } from "@/app/lib/type";

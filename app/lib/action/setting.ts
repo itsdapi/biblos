@@ -2,7 +2,7 @@
 
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Setting } from "@/app/lib/db/entities/Setting";
-import { TXpThresholds } from "@/app/lib/type";
+import { TUserDiscountThresholds, TXpThresholds } from "@/app/lib/type";
 
 export async function getSettingRepository() {
   const connection = await getDBConnection();
@@ -21,4 +21,13 @@ export async function getLevelDefinition() {
     return null;
   }
   return JSON.parse(ld.value) as TXpThresholds;
+}
+
+export async function getUserDiscountDefinition() {
+  const udd = await getSetting("user_discount_definition");
+  if (!udd) {
+    console.error("No user discount definition found!");
+    return null;
+  }
+  return JSON.parse(udd.value) as TUserDiscountThresholds;
 }

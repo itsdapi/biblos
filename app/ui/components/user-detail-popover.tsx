@@ -9,7 +9,8 @@ import { getLevelByXp } from "@/app/lib/action/user";
 import { getLevelDefinition } from "@/app/lib/action/setting";
 
 export default async function UserDetailPopover({ user }: { user?: IUser }) {
-  const xp = user?.xp ? user.xp : 0;
+  const xp = user ? user.xp : 0;
+  const balance = user ? user.balance : 0;
   const level = await getLevelByXp(xp);
   const levelThresholds = await getLevelDefinition();
   const conicColors: ProgressProps["strokeColor"] = {
@@ -68,12 +69,14 @@ export default async function UserDetailPopover({ user }: { user?: IUser }) {
       </CardBody>
       <CardFooter className="gap-3">
         <div className="flex gap-1">
-          <p className="font-semibold text-default-600 text-small">4</p>
-          <p className=" text-default-500 text-small">已购书目</p>
+          <p className="font-semibold text-default-600 text-small">
+            ¥{balance}
+          </p>
+          <p className="text-default-500 text-small">余额</p>
         </div>
         <div className="flex gap-1">
-          <p className="font-semibold text-default-600 text-small">97.1K</p>
-          <p className="text-default-500 text-small">已消费金额</p>
+          <p className="font-semibold text-default-600 text-small">4</p>
+          <p className=" text-default-500 text-small">已购书目</p>
         </div>
       </CardFooter>
     </Card>

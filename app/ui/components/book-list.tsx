@@ -8,6 +8,7 @@ export default async function BookList() {
     <div className={"flex flex-row gap-4 flex-wrap mx-auto pb-20"}>
       {books.payload.map((book) => (
         <BookItem
+          bookId={book.id}
           cover={book.coverUrl}
           key={book.ISBN}
           title={book.bookTitle}

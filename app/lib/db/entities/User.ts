@@ -47,6 +47,9 @@ export class UserEntity {
   @Column({ default: 0 })
   xp!: number;
 
+  @Column({ default: 0 })
+  balance!: number;
+
   @OneToMany(() => SessionEntity, (session) => session.userId)
   sessions!: SessionEntity[];
 

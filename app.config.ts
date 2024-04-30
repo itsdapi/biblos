@@ -35,6 +35,8 @@ export const config = {
     adminExpress: "/dashboard/express",
     adminPanel: "/dashboard",
     login: "/signin",
+    bookDetail: "/book",
+    cart: "/cart",
   },
   route: {
     protected: ["/dashboard"],

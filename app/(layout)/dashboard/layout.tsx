@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { auth, signIn } from "@/auth";
-import { IUser } from "@/app/lib/type";
+import { IUser, Role } from "@/app/lib/type";
 import { redirect } from "next/navigation";
 import { config } from "@/app.config";
 import { getBookCount } from "@/app/lib/action/book";
@@ -22,7 +22,7 @@ export default async function Layout({
     await signIn(undefined, { redirectTo: config.path.adminPanel });
   }
 
-  if (!session || user.role <= 1) {
+  if (!session || user.role <= Role["注册会员"]) {
     redirect(config.path.ban);
   }
 
