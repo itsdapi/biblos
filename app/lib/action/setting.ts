@@ -31,3 +31,12 @@ export async function getUserDiscountDefinition() {
   }
   return JSON.parse(udd.value) as TUserDiscountThresholds;
 }
+
+export async function getMoneyXpExchangeRate() {
+  const rate = await getSetting("money_to_xp_exchange_rate");
+  if (!rate) {
+    console.error("No user discount definition found!");
+    return 1;
+  }
+  return JSON.parse(rate.value) as number;
+}

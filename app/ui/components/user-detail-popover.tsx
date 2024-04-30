@@ -59,7 +59,11 @@ export default async function UserDetailPopover({ user }: { user?: IUser }) {
             VIP {level + 1}
           </p>
           <Progress
-            percent={levelThresholds ? (xp / levelThresholds[level]) * 100 : 0}
+            percent={
+              levelThresholds
+                ? Math.floor((xp / levelThresholds[level]) * 100)
+                : 0
+            }
             strokeColor={conicColors}
           />
           <p>

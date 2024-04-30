@@ -1,10 +1,10 @@
 import { User } from "next-auth";
 
 export enum Role {
-  "封禁用户" = 0,
-  "注册会员" = 1,
-  "员工" = 2,
-  "超级打工人" = 3,
+  "封禁用户",
+  "注册会员",
+  "员工",
+  "超级打工人",
 }
 
 export interface IUser extends User {
@@ -35,3 +35,14 @@ export type TCartItem = {
   price: number;
   discount: number;
 };
+
+export enum OrderStatus {
+  Pending,
+  Processing,
+  Paid,
+  Shipped,
+  Done,
+  Returned,
+  Refunded,
+  Canceled,
+}

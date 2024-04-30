@@ -5,7 +5,7 @@ export default function useExecutor<T>() {
     const _text = text ? text : "";
     let result: any;
     await toast.promise(executor, {
-      loading: `${_text}加载中`,
+      loading: `${_text}中`,
       success: (data) => {
         result = data;
         return `${_text}成功😎`;

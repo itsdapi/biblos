@@ -14,6 +14,7 @@ import { IUser, TCart } from "@/app/lib/type";
 import { Button } from "antd";
 import { ShoppingOutlined } from "@ant-design/icons";
 import {
+  checkoutCart,
   deleteCartItem,
   getCart,
   populateCartItems,
@@ -23,6 +24,8 @@ import useExecutor from "@/app/lib/hook/use-executor";
 import { Spinner } from "@nextui-org/spinner";
 import { getUserDiscount } from "@/app/lib/action/user";
 import { TbRefresh } from "react-icons/tb";
+import { useRouter } from "next/navigation";
+import { config } from "@/app.config";
 
 const columns = [
   { name: "物品", uid: "item" },
@@ -39,6 +42,7 @@ export default function CartTable() {
   const [key, setKey] = useState<Key>(0);
   const [loading, setLoading] = useState(false);
   const [userDiscount, setUserDiscount] = useState(1);
+  const router = useRouter();
   const executor = useExecutor();
 
   useEffect(() => {
@@ -53,6 +57,11 @@ export default function CartTable() {
     };
     fetch();
   }, [key]);
+
+  const handleCheckout = async () => {
+    const orderId = await executor(checkoutCart(carts), "结算");
+    router.push(`${config.path.checkoutSuccess}?status=success&id=${orderId}`);
+  };
 
   const renderCell = React.useCallback(
     (cart: TCart, columnKey: React.Key) => {
@@ -165,7 +174,9 @@ export default function CartTable() {
               icon={<TbRefresh />}
               onClick={() => setKey(Math.random())}
             />
-            <Button icon={<ShoppingOutlined />}>结账</Button>
+            <Button icon={<ShoppingOutlined />} onClick={handleCheckout}>
+              结账
+            </Button>
           </div>
         </div>
       </div>

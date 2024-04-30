@@ -7,6 +7,7 @@ import { Press } from "@/app/lib/db/entities/Press";
 import * as userEntities from "@/app/lib/db/entities/User";
 import { Setting } from "@/app/lib/db/entities/Setting";
 import { Express } from "@/app/lib/db/entities/Express";
+import { Order, OrderItem } from "@/app/lib/db/entities/Order";
 
 const dbOption: DataSourceOptions = {
   database: config.db.database,
@@ -25,6 +26,8 @@ const dbOption: DataSourceOptions = {
     Press,
     Setting,
     Express,
+    Order,
+    OrderItem,
     userEntities.UserEntity,
     userEntities.AccountEntity,
     userEntities.VerificationTokenEntity,

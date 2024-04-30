@@ -1,11 +1,18 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { Page, TCart, TCartItem } from "@/app/lib/type";
+import { IUser, OrderStatus, Page, TCart, TCartItem } from "@/app/lib/type";
 import { getBooksByIds } from "@/app/lib/action/book";
 import { Book } from "@/app/lib/db/entities/Book";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
+import { auth } from "@/auth";
+import { getUserDiscount } from "@/app/lib/action/user";
+import { calculateTotalPrice } from "@/app/lib/utils";
+import { getDBConnection } from "@/app/lib/db/connection";
+import { UserEntity } from "@/app/lib/db/entities/User";
+import { getMoneyXpExchangeRate } from "@/app/lib/action/setting";
+import { Order, OrderItem } from "@/app/lib/db/entities/Order";
 
 export async function saveCart(id: number, quantity: number) {
   const cookieStore = cookies();
@@ -84,4 +91,57 @@ export async function populateCartItems(carts: TCart[]): Promise<TCart[]> {
     ...cart,
     item: booksById[cart.id],
   }));
+}
+
+export async function checkoutCart(carts: TCart[]) {
+  const connection = await getDBConnection();
+  const user = (await auth())?.user as IUser | undefined;
+  if (!user) {
+    throw new Error("User not login");
+  }
+  const userId = user?.id;
+  const userBalance = user?.balance;
+  const userDiscount = await getUserDiscount();
+  const userXp = user?.xp;
+  const moneyToXpRate = await getMoneyXpExchangeRate();
+  const totalAmount = calculateTotalPrice(carts, userDiscount);
+
+  if (userBalance < totalAmount) {
+    throw new Error("Insufficient balance");
+  }
+
+  const userRepository = connection.getRepository(UserEntity);
+  await userRepository.update(
+    { id: userId },
+    {
+      balance: userBalance - totalAmount,
+      xp: userXp + totalAmount * moneyToXpRate,
+    },
+  );
+
+  // Create Order first
+  const orderRepository = connection.getRepository(Order);
+  const order = orderRepository.create({
+    userId,
+    totalAmount,
+    orderStatus: OrderStatus.Processing,
+  });
+  await orderRepository.save(order);
+
+  const orderItemRepository = connection.getRepository(OrderItem);
+  const orderItems = carts.map((cart) => {
+    if (!cart.item) {
+      throw new Error(`${cart.id}'s has no item`);
+    }
+    return orderItemRepository.create({
+      orderId: order.id,
+      quantity: cart.quantity,
+      totalAmount: cart.item.price,
+    });
+  });
+  await orderItemRepository.save(orderItems);
+  revalidatePath(config.path.cart);
+  await emptyCart();
+  console.log("Successfully checkout");
+  return order.id;
 }

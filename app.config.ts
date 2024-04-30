@@ -37,6 +37,7 @@ export const config = {
     login: "/signin",
     bookDetail: "/book",
     cart: "/cart",
+    checkoutSuccess: "/cart/result",
   },
   route: {
     protected: ["/dashboard"],
