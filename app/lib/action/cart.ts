@@ -2,12 +2,12 @@
 
 import { cookies } from "next/headers";
 import { IUser, OrderStatus, Page, TCart, TCartItem } from "@/app/lib/type";
-import { getBooksByIds } from "@/app/lib/action/book";
+import { getBookRepository, getBooksByIds } from "@/app/lib/action/book";
 import { Book } from "@/app/lib/db/entities/Book";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
 import { auth } from "@/auth";
-import { getUserDiscount } from "@/app/lib/action/user";
+import { getUserDiscount, getUserRepository } from "@/app/lib/action/user";
 import { calculateTotalPrice } from "@/app/lib/utils";
 import { getDBConnection } from "@/app/lib/db/connection";
 import { UserEntity } from "@/app/lib/db/entities/User";
@@ -106,11 +106,14 @@ export async function checkoutCart(carts: TCart[]) {
   const moneyToXpRate = await getMoneyXpExchangeRate();
   const totalAmount = calculateTotalPrice(carts, userDiscount);
 
+  const bookRepository = await getBookRepository();
+  // TODO: 还需要查询书本库存！！！忘记做了 下次一定 现在不会管库存的
+
   if (userBalance < totalAmount) {
     throw new Error("Insufficient balance");
   }
 
-  const userRepository = connection.getRepository(UserEntity);
+  const userRepository = await getUserRepository();
   await userRepository.update(
     { id: userId },
     {

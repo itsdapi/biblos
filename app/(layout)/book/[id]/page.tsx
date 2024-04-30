@@ -8,6 +8,7 @@ import { string } from "zod";
 import moment from "moment";
 import { InputNumber } from "antd";
 import PurchaseButton from "@/app/ui/components/cart/purchase-button";
+import Wrapper from "@/app/ui/content-wrapper";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = Number(params.id);
@@ -67,22 +68,6 @@ function Desc({
     <div className={"space-y-2"}>
       <p className={"text-2xl font-bold"}>{title}</p>
       <p>{content}</p>
-    </div>
-  );
-}
-
-function Wrapper({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`flex gap-4 bg-background p-8 rounded-md border ${className}`}
-    >
-      {children}
     </div>
   );
 }

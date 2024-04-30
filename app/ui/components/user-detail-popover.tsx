@@ -7,6 +7,7 @@ import { IUser, Role } from "@/app/lib/type";
 import { Chip } from "@nextui-org/chip";
 import { getLevelByXp } from "@/app/lib/action/user";
 import { getLevelDefinition } from "@/app/lib/action/setting";
+import { config } from "@/app.config";
 
 export default async function UserDetailPopover({ user }: { user?: IUser }) {
   const xp = user ? user.xp : 0;
@@ -43,7 +44,7 @@ export default async function UserDetailPopover({ user }: { user?: IUser }) {
             </Chip>
           </div>
         </div>
-        <Link href={"/profile"}>
+        <Link href={config.path.order}>
           <Button color="primary" radius="full" size="sm">
             主页
           </Button>

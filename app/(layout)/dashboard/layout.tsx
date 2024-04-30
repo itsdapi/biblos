@@ -3,12 +3,7 @@ import { auth, signIn } from "@/auth";
 import { IUser, Role } from "@/app/lib/type";
 import { redirect } from "next/navigation";
 import { config } from "@/app.config";
-import { getBookCount } from "@/app/lib/action/book";
-import { getPressCount } from "@/app/lib/action/press";
-import { getUserCount } from "@/app/lib/action/user";
-import CountBlock from "@/app/ui/components/count-block";
 import { Tabs } from "@/app/ui/tabs";
-import Link from "next/link";
 import DashboardStats from "@/app/ui/components/dashboard-stats";
 
 export default async function Layout({
