@@ -31,20 +31,20 @@ export default async function UserDetailPopover({ user }: { user?: IUser }) {
             src={user?.image ? user.image : ""}
           />
           <div className="flex flex-col items-start justify-center space-y-1">
-            <p>
+            <div>
               <h4 className="text-small font-semibold leading-none text-default-600">
                 {user?.name}
               </h4>
               <h5 className="text-small tracking-tight text-default-500">
                 {user?.email}
               </h5>
-            </p>
+            </div>
             <Chip size={"sm"} color={"success"} variant={"dot"}>
               {user && Role[user.role]}
             </Chip>
           </div>
         </div>
-        <Link href={config.path.order}>
+        <Link href={config.path.profile}>
           <Button color="primary" radius="full" size="sm">
             主页
           </Button>

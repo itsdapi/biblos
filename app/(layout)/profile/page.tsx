@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation";
-import { config } from "@/app.config";
+import OrderPage from "@/app/(layout)/profile/order/page";
 
-export default async function Page() {
-  redirect(config.path.order);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { page?: number };
+}) {
+  return <OrderPage searchParams={searchParams} />;
 }

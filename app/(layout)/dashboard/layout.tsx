@@ -25,17 +25,22 @@ export default async function Layout({
     {
       key: "1",
       label: "书本",
-      path: `${config.path.adminPanel}/book`,
+      path: config.path.adminBook,
     },
     {
       key: "2",
       label: "出版社",
-      path: `${config.path.adminPanel}/press`,
+      path: config.path.adminPress,
     },
     {
       key: "3",
       label: "配送公司",
-      path: `${config.path.adminPanel}/express`,
+      path: config.path.adminExpress,
+    },
+    {
+      key: "4",
+      label: "用户",
+      path: config.path.adminUser,
     },
   ];
 

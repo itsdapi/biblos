@@ -30,7 +30,7 @@ export default async function Header() {
             <div className={"gap-2 flex flex-row items-center"}>
               <LogoutButton />
               {user && user.role > Role["注册会员"] && (
-                <Link href={config.path.adminBook}>
+                <Link href={config.path.adminPanel}>
                   <Button icon={<RxDashboard />} />
                 </Link>
               )}

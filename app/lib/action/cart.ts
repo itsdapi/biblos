@@ -2,7 +2,12 @@
 
 import { cookies } from "next/headers";
 import { IUser, OrderStatus, Page, TCart, TCartItem } from "@/app/lib/type";
-import { getBookRepository, getBooksByIds } from "@/app/lib/action/book";
+import {
+  buyBook,
+  checkStock,
+  getBookRepository,
+  getBooksByIds,
+} from "@/app/lib/action/book";
 import { Book } from "@/app/lib/db/entities/Book";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
@@ -106,13 +111,24 @@ export async function checkoutCart(carts: TCart[]) {
   const moneyToXpRate = await getMoneyXpExchangeRate();
   const totalAmount = calculateTotalPrice(carts, userDiscount);
 
-  const bookRepository = await getBookRepository();
-  // TODO: 还需要查询书本库存！！！忘记做了 下次一定 现在不会管库存的
-
+  // Check balance
   if (userBalance < totalAmount) {
-    throw new Error("Insufficient balance");
+    throw new Error("余额不足");
   }
 
+  // Check stock
+  const stockResults = await Promise.all(
+    carts.map((cart) => checkStock(cart.id, cart.quantity)),
+  );
+  const unavailableItems = stockResults.filter((result) => !result.isAvailable);
+  if (unavailableItems.length > 0) {
+    throw new Error(`${unavailableItems.map((item) => item.name)} \n 库存不足`);
+  }
+
+  // Buy book
+  await Promise.all(carts.map((cart) => buyBook(cart.id, cart.quantity)));
+
+  // Update User balance, xp
   const userRepository = await getUserRepository();
   await userRepository.update(
     { id: userId },
@@ -131,12 +147,14 @@ export async function checkoutCart(carts: TCart[]) {
   });
   await orderRepository.save(order);
 
+  // Create record for each purchase item
   const orderItemRepository = connection.getRepository(OrderItem);
   const orderItems = carts.map((cart) => {
     if (!cart.item) {
       throw new Error(`${cart.id}'s has no item`);
     }
     return orderItemRepository.create({
+      itemId: cart.id,
       orderId: order.id,
       quantity: cart.quantity,
       totalAmount: cart.item.price,

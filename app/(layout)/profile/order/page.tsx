@@ -4,7 +4,7 @@ import { IUser } from "@/app/lib/type";
 import OrderTable from "@/app/ui/components/user/order-table";
 import usePageOptions from "@/app/lib/hook/use-page-option";
 
-export default async function Page({
+export default async function OrderPage({
   searchParams,
 }: {
   searchParams?: { page?: number };

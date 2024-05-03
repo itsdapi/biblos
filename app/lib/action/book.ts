@@ -108,3 +108,47 @@ export async function getBooksByIds(ids: number[]): Promise<Page<Book>> {
     };
   }
 }
+
+/**
+ * Check book's stock number meet requirement
+ * True: able to buy
+ * False: not able to buy
+ * @param bookId
+ * @param require
+ */
+export async function checkStock(bookId: number, require: number) {
+  const repo = await getBookRepository();
+  const book = await repo.findOne({
+    where: { id: bookId },
+    select: ["stockNumber", "bookTitle"],
+  });
+  if (!book) {
+    console.error("Book not found");
+    return {
+      name: "",
+      isAvailable: false,
+    };
+  }
+  return {
+    id: book.bookTitle,
+    isAvailable: book.stockNumber > require,
+  };
+}
+
+export async function buyBook(bookId: number, quantity: number) {
+  const repo = await getBookRepository();
+  const book = await repo.findOne({ where: { id: bookId } });
+  if (!book) {
+    throw new Error(`id:${bookId} 找不到物品`);
+  }
+  if (book.stockNumber < quantity) {
+    throw new Error(`id:${bookId} 库存不足`);
+  }
+  const newBook = repo.create({
+    id: bookId,
+    stockNumber: book.stockNumber - quantity,
+  });
+  await repo.save(newBook);
+
+  return;
+}

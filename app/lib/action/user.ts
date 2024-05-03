@@ -2,12 +2,16 @@
 
 import { getDBConnection } from "@/app/lib/db/connection";
 import { UserEntity } from "@/app/lib/db/entities/User";
-import { IUser, Role } from "@/app/lib/type";
+import { IUser, Page, Role } from "@/app/lib/type";
 import {
   getLevelDefinition,
   getUserDiscountDefinition,
 } from "@/app/lib/action/setting";
 import { auth } from "@/auth";
+import { Express } from "@/app/lib/db/entities/Express";
+import { revalidatePath } from "next/cache";
+import { config } from "@/app.config";
+import { getExpressRepository } from "@/app/lib/action/express";
 
 export async function getUserRepository() {
   const connection = await getDBConnection();
@@ -56,4 +60,42 @@ export async function getUserDiscount(): Promise<number> {
   }
   const level = await getLevelByXp(user.xp);
   return udd[level];
+}
+
+export async function getAllUser(
+  skip: number,
+  limit: number,
+): Promise<Page<IUser>> {
+  try {
+    const repo = await getUserRepository();
+    const [users, total] = await repo.findAndCount({
+      skip,
+      take: limit,
+      select: ["id", "name", "email", "image", "xp", "balance", "role"],
+    });
+    const data = JSON.stringify(users);
+    return {
+      total,
+      payload: JSON.parse(data) as IUser[],
+    };
+  } catch (e) {
+    return {
+      total: 0,
+      payload: [],
+    };
+  }
+}
+
+export async function addOrEditUser(data: IUser) {
+  const repo = await getUserRepository();
+  const express = repo.create(data);
+  await repo.save(express);
+  revalidatePath(config.path.adminUser);
+  return;
+}
+
+export async function getUserDetailById(id: string) {
+  const repo = await getUserRepository();
+  const data = JSON.stringify(await repo.findOneBy({ id }));
+  return JSON.parse(data) as IUser | null;
 }

@@ -26,10 +26,10 @@ export async function getAllOrderItemByOrderId(
       skip,
       take: limit,
     });
-
+    const data = JSON.stringify(orderItems);
     return {
       total,
-      payload: orderItems,
+      payload: JSON.parse(data) as OrderItem[],
     };
   } catch (e) {
     console.error("failed to get order item");
@@ -46,13 +46,13 @@ export async function getAllOrder(
   limit: number,
 ): Promise<Page<Order>> {
   try {
-    console.log("getAllOrder", skip);
     const repo = await getOrderRepository();
     const [orders, total] = await repo.findAndCount({
       where: { userId },
       order: {
         id: "DESC",
       },
+      select: ["id", "userId", "createdAt", "totalAmount", "orderStatus"],
       skip,
       take: limit,
     });

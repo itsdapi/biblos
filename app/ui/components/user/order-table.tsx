@@ -7,6 +7,8 @@ import moment from "moment/moment";
 import OrderStatusTag from "@/app/ui/components/user/order-status-tag";
 import usePagination from "@/app/lib/hook/use-pagination";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { config } from "@/app.config";
 
 export default function OrderTable({
   orders,
@@ -53,11 +55,22 @@ export default function OrderTable({
       dataIndex: "orderStatus",
       render: (status) => <OrderStatusTag status={status} />,
     },
+    {
+      title: "操作",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Link href={`${config.path.order}/${record.id}`}>详情</Link>
+        </Space>
+      ),
+    },
   ];
 
   return (
     <Table
       columns={columns}
+      title={() => "我的订单"}
+      bordered
       dataSource={orders}
       pagination={{ total: totalPages, current: currentPage }}
       onChange={handleTableChange}

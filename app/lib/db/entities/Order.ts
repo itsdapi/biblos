@@ -38,6 +38,9 @@ export class OrderItem {
   id!: number;
 
   @Column()
+  itemId!: number;
+
+  @Column()
   quantity!: number;
 
   @Column()
