@@ -1,6 +1,5 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Avatar, Button } from "@nextui-org/react";
-import { DefaultSession } from "next-auth";
 import Link from "next/link";
 import { Progress, ProgressProps } from "antd";
 import { IUser, Role } from "@/app/lib/type";

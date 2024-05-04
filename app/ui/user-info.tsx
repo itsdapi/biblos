@@ -3,7 +3,7 @@ import { Tooltip } from "@nextui-org/react";
 import UserDetailPopover from "@/app/ui/components/user-detail-popover";
 import { IUser } from "@/app/lib/type";
 
-export default function UserInfo({ user }: { user?: IUser }): JSX.Element {
+export default function UserInfo({ user }: { user?: IUser }) {
   return (
     <div>
       {user && (

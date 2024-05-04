@@ -1,12 +1,8 @@
 import { getBookDetailById } from "@/app/lib/action/book";
 import { notFound } from "next/navigation";
-import { Button, Image } from "@nextui-org/react";
-import { MdAddShoppingCart } from "react-icons/md";
+import { Image } from "@nextui-org/react";
 import { Chip } from "@nextui-org/chip";
-import { ReactNode } from "react";
-import { string } from "zod";
 import moment from "moment";
-import { InputNumber } from "antd";
 import PurchaseButton from "@/app/ui/components/cart/purchase-button";
 import Wrapper from "@/app/ui/content-wrapper";
 

@@ -1,12 +1,10 @@
 "use client";
 
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input } from "antd";
 import React from "react";
-import { Press } from "@/app/lib/db/entities/Press";
-import { addOrEditPress } from "@/app/lib/action/press";
 import useManageForm from "@/app/lib/hook/use-manage-form";
 import { config } from "@/app.config";
-import { IUser, Role } from "@/app/lib/type";
+import { IUser } from "@/app/lib/type";
 import { addOrEditUser } from "@/app/lib/action/user";
 
 export default function UserForm({ user }: { user?: IUser }) {

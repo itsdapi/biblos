@@ -3,13 +3,16 @@
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Order, OrderItem } from "@/app/lib/db/entities/Order";
 import { Page } from "@/app/lib/type";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getOrderRepository() {
+  noStore();
   const connection = await getDBConnection();
   return connection.getRepository(Order);
 }
 
 export async function getOrderItemRepository() {
+  noStore();
   const connection = await getDBConnection();
   return connection.getRepository(OrderItem);
 }
@@ -19,6 +22,7 @@ export async function getAllOrderItemByOrderId(
   skip: number,
   limit: number,
 ): Promise<Page<OrderItem>> {
+  noStore();
   try {
     const repo = await getOrderItemRepository();
     const [orderItems, total] = await repo.findAndCount({
@@ -45,6 +49,7 @@ export async function getAllOrder(
   skip: number,
   limit: number,
 ): Promise<Page<Order>> {
+  noStore();
   try {
     const repo = await getOrderRepository();
     const [orders, total] = await repo.findAndCount({

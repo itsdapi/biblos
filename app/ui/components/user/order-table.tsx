@@ -1,12 +1,10 @@
 "use client";
 
-import { User } from "next-auth";
-import { Space, Table, TableProps, Tag } from "antd";
+import { Space, Table, TableProps } from "antd";
 import { Order } from "@/app/lib/db/entities/Order";
 import moment from "moment/moment";
 import OrderStatusTag from "@/app/ui/components/user/order-status-tag";
 import usePagination from "@/app/lib/hook/use-pagination";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { config } from "@/app.config";
 

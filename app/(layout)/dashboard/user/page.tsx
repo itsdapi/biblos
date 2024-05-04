@@ -1,6 +1,4 @@
 import { config } from "@/app.config";
-import ManageExpressTable from "@/app/ui/components/manage/table/manage-express-table";
-import { getAllExpress } from "@/app/lib/action/express";
 import TableHeader from "@/app/ui/table-header";
 import Pagination from "@/app/ui/pagination";
 import usePageOptions from "@/app/lib/hook/use-page-option";

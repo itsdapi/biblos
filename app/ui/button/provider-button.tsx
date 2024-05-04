@@ -1,8 +1,3 @@
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
-import Image from "next/image";
-import { signIn, auth, providerMap } from "@/auth";
-
 // export default function ProviderButton(props: {}) {
 //   return <Button variant={'shadow'} color={'result'}>
 //     <Link href={authUrl} className={'flex items-center'}>

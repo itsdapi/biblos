@@ -1,5 +1,5 @@
 // import bcrypt from "bcrypt";
-import { Page, TCart, TCartItem } from "@/app/lib/type";
+import { TCart } from "@/app/lib/type";
 //
 // export async function hashPassword(password: string) {
 //   const saltRounds = 10; // You can increase the salt rounds for more security

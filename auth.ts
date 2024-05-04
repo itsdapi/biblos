@@ -16,7 +16,7 @@ const authDbOption: DataSourceOptions = {
   logging: false,
   type: "oracle",
   host: config.db.host,
-  port: config.db.port,
+  port: Number(config.db.port),
   username: config.db.username,
   password: config.db.password,
   sid: config.db.sid,

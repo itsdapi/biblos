@@ -1,19 +1,13 @@
 "use client";
 
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import Link from "next/link";
 import { config } from "@/app.config";
 import { FaRegEdit } from "react-icons/fa";
-import { FaRegTrashCan } from "react-icons/fa6";
-import { Press } from "@/app/lib/db/entities/Press";
-import { deletePressById } from "@/app/lib/action/press";
-import useExecutor from "@/app/lib/hook/use-executor";
 import { IUser, Role } from "@/app/lib/type";
 import { Avatar } from "@nextui-org/react";
 
 export default function ManageUserTable({ users }: { users: IUser[] }) {
-  const executor = useExecutor();
-
   const columns = [
     {
       title: "头像",

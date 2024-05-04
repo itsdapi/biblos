@@ -2,15 +2,15 @@
 
 import React, { Key, ReactNode, useEffect, useState } from "react";
 import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
   Image,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from "@nextui-org/react";
-import { IUser, TCart } from "@/app/lib/type";
+import { TCart } from "@/app/lib/type";
 import { Button } from "antd";
 import { ShoppingOutlined } from "@ant-design/icons";
 import {

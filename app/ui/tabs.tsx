@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import { usePathname, useRouter } from "next/navigation";
 import { Tabs as TB } from "antd";
-import { config } from "@/app.config";
 
 interface ITabs {
   key: string;

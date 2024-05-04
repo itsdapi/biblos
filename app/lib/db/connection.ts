@@ -8,6 +8,7 @@ import * as userEntities from "@/app/lib/db/entities/User";
 import { Setting } from "@/app/lib/db/entities/Setting";
 import { Express } from "@/app/lib/db/entities/Express";
 import { Order, OrderItem } from "@/app/lib/db/entities/Order";
+import { unstable_noStore as noStore } from "next/cache";
 
 const dbOption: DataSourceOptions = {
   database: config.db.database,
@@ -17,7 +18,7 @@ const dbOption: DataSourceOptions = {
   subscribers: [],
   type: "oracle",
   host: config.db.host,
-  port: config.db.port,
+  port: Number(config.db.port),
   username: config.db.username,
   password: config.db.password,
   sid: config.db.sid,
@@ -38,6 +39,7 @@ const dbOption: DataSourceOptions = {
 const oracleConnection = new DataSource(dbOption);
 
 export const getDBConnection = async (): Promise<DataSource> => {
+  noStore();
   if (!oracleConnection.isInitialized) {
     await oracleConnection.initialize();
   }

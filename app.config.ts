@@ -1,11 +1,11 @@
 export const config = {
   db: {
-    database: "bookstore",
-    host: "192.168.100.121",
-    port: 1521,
-    username: "c##bookstoreapp",
-    password: "abc1234567",
-    sid: "bookstore",
+    database: process.env.DB_DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    sid: process.env.DB_SID,
   },
   auth: {
     github: {

@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { Press } from "./Press";
 
-@Entity()
+@Entity({ name: "book" })
 export class Book {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -15,14 +15,12 @@ export class Book {
   @Column({
     length: 17,
     comment: "书号",
-    nullable: false,
   })
   ISBN!: string;
 
   @Column({
     length: 255,
     comment: "书名",
-    nullable: false,
   })
   bookTitle!: string;
 
@@ -53,14 +51,12 @@ export class Book {
   category?: string;
 
   @Column({
-    nullable: false,
     comment: "库存数量",
   })
   stockNumber!: number;
 
   @Column({
     type: "float",
-    nullable: false,
     comment: "定价",
   })
   price!: number;

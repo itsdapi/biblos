@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({ name: "express" })
 export class Express {
   @PrimaryGeneratedColumn()
   id!: number;

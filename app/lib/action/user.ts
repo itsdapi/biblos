@@ -8,17 +8,18 @@ import {
   getUserDiscountDefinition,
 } from "@/app/lib/action/setting";
 import { auth } from "@/auth";
-import { Express } from "@/app/lib/db/entities/Express";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
-import { getExpressRepository } from "@/app/lib/action/express";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getUserRepository() {
+  noStore();
   const connection = await getDBConnection();
   return connection.getRepository(UserEntity);
 }
 
 export async function changeUserRole(id: string, role: Role) {
+  noStore();
   const userRepository = await getUserRepository();
   const user = await userRepository.findOne({ where: { id } });
   if (!user) {
@@ -30,11 +31,13 @@ export async function changeUserRole(id: string, role: Role) {
 }
 
 export async function getUserCount() {
+  noStore();
   const repo = await getUserRepository();
   return await repo.count();
 }
 
 export async function getLevelByXp(xp: number) {
+  noStore();
   const xpThresholds = await getLevelDefinition();
   if (!xpThresholds) {
     console.error("level_definition not defined in db!");
@@ -51,6 +54,7 @@ export async function getLevelByXp(xp: number) {
 }
 
 export async function getUserDiscount(): Promise<number> {
+  noStore();
   const session = await auth();
   const user = session?.user as IUser | undefined;
   const udd = await getUserDiscountDefinition();
@@ -66,6 +70,7 @@ export async function getAllUser(
   skip: number,
   limit: number,
 ): Promise<Page<IUser>> {
+  noStore();
   try {
     const repo = await getUserRepository();
     const [users, total] = await repo.findAndCount({
@@ -87,6 +92,7 @@ export async function getAllUser(
 }
 
 export async function addOrEditUser(data: IUser) {
+  noStore();
   const repo = await getUserRepository();
   const express = repo.create(data);
   await repo.save(express);
@@ -95,6 +101,7 @@ export async function addOrEditUser(data: IUser) {
 }
 
 export async function getUserDetailById(id: string) {
+  noStore();
   const repo = await getUserRepository();
   const data = JSON.stringify(await repo.findOneBy({ id }));
   return JSON.parse(data) as IUser | null;

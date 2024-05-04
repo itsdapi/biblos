@@ -2,12 +2,7 @@
 
 import { cookies } from "next/headers";
 import { IUser, OrderStatus, Page, TCart, TCartItem } from "@/app/lib/type";
-import {
-  buyBook,
-  checkStock,
-  getBookRepository,
-  getBooksByIds,
-} from "@/app/lib/action/book";
+import { buyBook, checkStock, getBooksByIds } from "@/app/lib/action/book";
 import { Book } from "@/app/lib/db/entities/Book";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
@@ -15,11 +10,12 @@ import { auth } from "@/auth";
 import { getUserDiscount, getUserRepository } from "@/app/lib/action/user";
 import { calculateTotalPrice } from "@/app/lib/utils";
 import { getDBConnection } from "@/app/lib/db/connection";
-import { UserEntity } from "@/app/lib/db/entities/User";
 import { getMoneyXpExchangeRate } from "@/app/lib/action/setting";
 import { Order, OrderItem } from "@/app/lib/db/entities/Order";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function saveCart(id: number, quantity: number) {
+  noStore();
   const cookieStore = cookies();
   let carts: TCart[] = [];
   if (cookieStore.has("carts")) {
@@ -37,6 +33,7 @@ export async function saveCart(id: number, quantity: number) {
 }
 
 export async function deleteCartItem(id: number) {
+  noStore();
   const cookieStore = cookies();
   if (!cookieStore.has("carts")) {
     cookieStore.set("carts", JSON.stringify([]));
@@ -54,6 +51,7 @@ export async function emptyCart() {
 }
 
 export async function getCart(): Promise<TCart[]> {
+  noStore();
   const cookieStore = cookies();
   if (!cookieStore.has("carts")) {
     cookieStore.set("carts", JSON.stringify([]));
@@ -69,6 +67,7 @@ export async function getCart(): Promise<TCart[]> {
  * @returns A Promise of TCart array with the item field populated.
  */
 export async function populateCartItems(carts: TCart[]): Promise<TCart[]> {
+  noStore();
   // Extract unique IDs from the carts
   const ids = carts
     .map((cart) => cart.id)
@@ -99,6 +98,7 @@ export async function populateCartItems(carts: TCart[]): Promise<TCart[]> {
 }
 
 export async function checkoutCart(carts: TCart[]) {
+  noStore();
   const connection = await getDBConnection();
   const user = (await auth())?.user as IUser | undefined;
   if (!user) {

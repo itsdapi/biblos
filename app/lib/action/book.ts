@@ -7,8 +7,10 @@ import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
 import { Page } from "@/app/lib/type";
 import { In } from "typeorm";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getBookRepository() {
+  noStore();
   const connection = await getDBConnection();
   return connection.getRepository(Book);
 }
@@ -17,6 +19,7 @@ export async function getAllBooks(
   skip: number,
   limit: number,
 ): Promise<Page<Book>> {
+  noStore();
   try {
     const bookRepository = await getBookRepository();
     const [books, total] = await bookRepository.findAndCount({
@@ -47,6 +50,7 @@ export async function getAllBooks(
 }
 
 export async function getBookDetailById(bookId: number) {
+  noStore();
   const repo = await getBookRepository();
   const data = JSON.stringify(await repo.findOne({ where: { id: bookId } }));
   return JSON.parse(data) as Book | null;
@@ -55,6 +59,7 @@ export async function getBookDetailById(bookId: number) {
 export async function addOrEditBook(
   bookData: Partial<Book> & { pressId: number },
 ): Promise<void> {
+  noStore();
   const { pressId, ...data } = bookData;
   const bookRepository = await getBookRepository();
   const press = await getPressDetailById(pressId);
@@ -76,6 +81,7 @@ export async function addOrEditBook(
 }
 
 export async function deleteBookById(bookId: number) {
+  noStore();
   const repo = await getBookRepository();
   await repo.delete(bookId);
   revalidatePath(config.path.adminBook);
@@ -83,6 +89,7 @@ export async function deleteBookById(bookId: number) {
 }
 
 export async function getBookCount() {
+  noStore();
   try {
     const repo = await getBookRepository();
     return await repo.count();
@@ -93,6 +100,7 @@ export async function getBookCount() {
 }
 
 export async function getBooksByIds(ids: number[]): Promise<Page<Book>> {
+  noStore();
   try {
     const repo = await getBookRepository();
     const [book, total] = await repo.findAndCount({ where: { id: In(ids) } });
@@ -117,6 +125,7 @@ export async function getBooksByIds(ids: number[]): Promise<Page<Book>> {
  * @param require
  */
 export async function checkStock(bookId: number, require: number) {
+  noStore();
   const repo = await getBookRepository();
   const book = await repo.findOne({
     where: { id: bookId },
@@ -136,6 +145,7 @@ export async function checkStock(bookId: number, require: number) {
 }
 
 export async function buyBook(bookId: number, quantity: number) {
+  noStore();
   const repo = await getBookRepository();
   const book = await repo.findOne({ where: { id: bookId } });
   if (!book) {

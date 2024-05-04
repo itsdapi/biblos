@@ -3,18 +3,22 @@
 import { getDBConnection } from "@/app/lib/db/connection";
 import { Setting } from "@/app/lib/db/entities/Setting";
 import { TUserDiscountThresholds, TXpThresholds } from "@/app/lib/type";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getSettingRepository() {
+  noStore();
   const connection = await getDBConnection();
   return connection.getRepository(Setting);
 }
 
 export async function getSetting(key: string) {
+  noStore();
   const repo = await getSettingRepository();
   return repo.findOne({ where: { key } });
 }
 
 export async function getLevelDefinition() {
+  noStore();
   const ld = await getSetting("level_definition");
   if (!ld) {
     console.error("No level definition found!");
@@ -24,6 +28,7 @@ export async function getLevelDefinition() {
 }
 
 export async function getUserDiscountDefinition() {
+  noStore();
   const udd = await getSetting("user_discount_definition");
   if (!udd) {
     console.error("No user discount definition found!");
@@ -33,6 +38,7 @@ export async function getUserDiscountDefinition() {
 }
 
 export async function getMoneyXpExchangeRate() {
+  noStore();
   const rate = await getSetting("money_to_xp_exchange_rate");
   if (!rate) {
     console.error("No user discount definition found!");
