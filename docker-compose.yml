@@ -4,3 +4,10 @@ services:
       context: .
     restart: on-failure
     container_name: biblos
+    networks:
+      - out
+
+networks:
+  out:
+    external: true
+    name: cf-tunnel_default
