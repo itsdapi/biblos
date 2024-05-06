@@ -19,13 +19,13 @@ export default async function Layout({
   return (
     <main>
       <CreateHeader>个人中心</CreateHeader>
-      <User
-        name={user.name}
-        description={user.email}
-        avatarProps={{
-          src: user.image ? user.image : "",
-        }}
-      />
+      {/*<User*/}
+      {/*  name={user.name}*/}
+      {/*  description={user.email}*/}
+      {/*  avatarProps={{*/}
+      {/*    src: user.image ? user.image : "",*/}
+      {/*  }}*/}
+      {/*/>*/}
       {children}
     </main>
   );

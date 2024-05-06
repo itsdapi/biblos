@@ -11,6 +11,7 @@ import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
 import { unstable_noStore as noStore } from "next/cache";
+import { Order } from "@/app/lib/db/entities/Order";
 
 export async function getUserRepository() {
   noStore();
@@ -105,4 +106,22 @@ export async function getUserDetailById(id: string) {
   const repo = await getUserRepository();
   const data = JSON.stringify(await repo.findOneBy({ id }));
   return JSON.parse(data) as IUser | null;
+}
+
+export async function getUserPurchaseCount() {
+  noStore();
+  const user = (await auth())?.user as IUser | undefined;
+  const userId = user?.id;
+  if (!userId) {
+    console.error("[getUserPurchaseCount] user not found!");
+    return 0;
+  }
+  const connection = await getDBConnection();
+  const totalItems = await connection
+    .createQueryBuilder(Order, "order")
+    .leftJoinAndSelect("order.items", "item")
+    .where("order.userId = :userId", { userId })
+    .select("SUM(item.quantity)", "totalItems")
+    .getRawOne();
+  return totalItems.totalItems;
 }

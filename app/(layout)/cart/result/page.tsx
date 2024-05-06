@@ -1,5 +1,6 @@
 import { Button, Result } from "antd";
 import Link from "next/link";
+import { config } from "@/app.config";
 
 export default function Page({
   searchParams,
@@ -25,7 +26,10 @@ export default function Page({
         }
         extra={[
           <Link href={"/"} key={"homepage"}>
-            <Button type="primary">返回主页</Button>
+            <Button>返回主页</Button>
+          </Link>,
+          <Link href={config.path.order} key={"orders"}>
+            <Button type="primary">我的订单</Button>
           </Link>,
         ]}
       />

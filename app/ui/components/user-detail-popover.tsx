@@ -4,15 +4,18 @@ import Link from "next/link";
 import { Progress, ProgressProps } from "antd";
 import { IUser, Role } from "@/app/lib/type";
 import { Chip } from "@nextui-org/chip";
-import { getLevelByXp } from "@/app/lib/action/user";
+import { getLevelByXp, getUserPurchaseCount } from "@/app/lib/action/user";
 import { getLevelDefinition } from "@/app/lib/action/setting";
 import { config } from "@/app.config";
 
 export default async function UserDetailPopover({ user }: { user?: IUser }) {
   const xp = user ? user.xp : 0;
   const balance = user ? user.balance : 0;
-  const level = await getLevelByXp(xp);
-  const levelThresholds = await getLevelDefinition();
+  const [level, levelThresholds, purchaseCount] = await Promise.all([
+    getLevelByXp(xp),
+    getLevelDefinition(),
+    getUserPurchaseCount(),
+  ]);
   const conicColors: ProgressProps["strokeColor"] = {
     "0%": "#87d068",
     "50%": "#ffe58f",
@@ -79,7 +82,9 @@ export default async function UserDetailPopover({ user }: { user?: IUser }) {
           <p className="text-default-500 text-small">余额</p>
         </div>
         <div className="flex gap-1">
-          <p className="font-semibold text-default-600 text-small">4</p>
+          <p className="font-semibold text-default-600 text-small">
+            {purchaseCount}
+          </p>
           <p className=" text-default-500 text-small">已购书目</p>
         </div>
       </CardFooter>

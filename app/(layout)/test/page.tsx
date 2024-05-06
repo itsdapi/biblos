@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import { Book } from "@/app/lib/db/entities/Book";
 import { addOrEditBook } from "@/app/lib/action/book";
+import LoadingScreen from "@/app/ui/loading-screen";
 
 export default function Test() {
   // const books: Book[] = [
@@ -178,6 +179,7 @@ export default function Test() {
   return (
     <form action={handleClick}>
       <Button htmlType={"submit"}>添加书本</Button>
+      <LoadingScreen />
     </form>
   );
 }

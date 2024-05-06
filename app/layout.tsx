@@ -6,6 +6,7 @@ import "reflect-metadata";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import React, { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
+import LoadingScreen from "@/app/ui/loading-screen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
         <NextUIProvider>
           <AntdRegistry>
             <Toaster position="top-center" />
-            <Suspense fallback={<div>loading...</div>}>
+            <Suspense fallback={<LoadingScreen />}>
               <main>{children}</main>
             </Suspense>
           </AntdRegistry>
