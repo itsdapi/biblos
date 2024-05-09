@@ -42,6 +42,11 @@ export default async function Layout({
       label: "用户",
       path: config.path.adminUser,
     },
+    {
+      key: "5",
+      label: "订单",
+      path: config.path.adminOrder,
+    },
   ];
 
   return (

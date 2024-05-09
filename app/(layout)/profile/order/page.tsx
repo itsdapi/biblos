@@ -1,4 +1,4 @@
-import { getAllOrder } from "@/app/lib/action/order";
+import { getAllOrderById } from "@/app/lib/action/order";
 import { auth } from "@/auth";
 import { IUser } from "@/app/lib/type";
 import OrderTable from "@/app/ui/components/user/order-table";
@@ -18,7 +18,7 @@ export default async function OrderPage({
   }
 
   const [{ payload, total }] = await Promise.all([
-    getAllOrder(userId, skip, limit),
+    getAllOrderById(userId, skip, limit),
   ]);
 
   return <OrderTable orders={payload} totalItem={total} itemPerPage={limit} />;

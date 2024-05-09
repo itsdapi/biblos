@@ -4,6 +4,7 @@ import { DataSource, DataSourceOptions } from "typeorm";
 import { Book } from "@/app/lib/db/entities/Book";
 import { config } from "@/app.config";
 import { Press } from "@/app/lib/db/entities/Press";
+import { Comment } from "@/app/lib/db/entities/Comment";
 import * as userEntities from "@/app/lib/db/entities/User";
 import { Setting } from "@/app/lib/db/entities/Setting";
 import { Express } from "@/app/lib/db/entities/Express";
@@ -29,6 +30,7 @@ const dbOption: DataSourceOptions = {
     Express,
     Order,
     OrderItem,
+    Comment,
     userEntities.UserEntity,
     userEntities.AccountEntity,
     userEntities.VerificationTokenEntity,

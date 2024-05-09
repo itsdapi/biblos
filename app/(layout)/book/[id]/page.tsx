@@ -5,6 +5,7 @@ import { Chip } from "@nextui-org/chip";
 import moment from "moment";
 import PurchaseButton from "@/app/ui/components/cart/purchase-button";
 import Wrapper from "@/app/ui/content-wrapper";
+import Comment from "@/app/ui/components/comment/comment";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = Number(params.id);
@@ -48,6 +49,9 @@ export default async function Page({ params }: { params: { id: string } }) {
         />
         <Desc title={"目录"} content={book.catalog} />
         <Desc title={"描述"} content={book.introduction} />
+      </Wrapper>
+      <Wrapper>
+        <Comment postId={book.id} />
       </Wrapper>
     </main>
   );

@@ -38,3 +38,7 @@ export function calculateTotalPrice(carts: TCart[], userDiscount = 1) {
 export function rounded2digit(num: number) {
   return Math.round(num * 100) / 100;
 }
+
+export function isBlank(str: string) {
+  return !str || /^\s*$/.test(str);
+}

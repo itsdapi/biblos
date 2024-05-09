@@ -46,3 +46,12 @@ export async function getMoneyXpExchangeRate() {
   }
   return JSON.parse(rate.value) as number;
 }
+
+export async function getIndexImages() {
+  noStore();
+  const images = await getSetting("index_images");
+  if (!images) {
+    return [];
+  }
+  return JSON.parse(images.value) as string[];
+}

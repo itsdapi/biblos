@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import React from "react";
 import useManageForm from "@/app/lib/hook/use-manage-form";
 import { config } from "@/app.config";
@@ -44,7 +44,14 @@ export default function UserForm({ user }: { user?: IUser }) {
         </Form.Item>
 
         <Form.Item<FieldType> label="权限" name="role">
-          <Input />
+          <Select
+            options={[
+              { value: "0", label: "封禁用户" },
+              { value: "1", label: "注册会员" },
+              { value: "2", label: "员工" },
+              { value: "3", label: "超级打工人" },
+            ]}
+          />
         </Form.Item>
 
         <Form.Item<FieldType>

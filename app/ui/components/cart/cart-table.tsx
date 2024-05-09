@@ -26,6 +26,7 @@ import { getUserDiscount } from "@/app/lib/action/user";
 import { TbRefresh } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { config } from "@/app.config";
+import toast from "react-hot-toast";
 
 const columns = [
   { name: "物品", uid: "item" },
@@ -59,6 +60,10 @@ export default function CartTable() {
   }, [key]);
 
   const handleCheckout = async () => {
+    if (carts.length === 0) {
+      toast.error("结算时购物车不能为空");
+      return;
+    }
     const orderId = await executor(checkoutCart(carts), "结算");
     router.push(`${config.path.checkoutSuccess}?status=success&id=${orderId}`);
   };
