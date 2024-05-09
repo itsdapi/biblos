@@ -15,8 +15,9 @@ export default async function Home() {
           <Image
             src={img}
             key={img}
+            className={"aspect-[4/1] w-full rounded-md border"}
+            classNames={{ wrapper: "!max-w-full" }}
             alt={"首页轮播图"}
-            className={"rounded-md border"}
             radius={"none"}
           />
         ))}

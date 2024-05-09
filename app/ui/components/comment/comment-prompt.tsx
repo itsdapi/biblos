@@ -25,8 +25,12 @@ export default function CommentPrompt({
 
   return (
     <div className={"w-full space-y-4"}>
-      <div className={"flex flex-row space-x-4"}>
-        <Avatar src={user?.image ? user.image : ""} size={"lg"} />
+      <div className={"flex flex-row md:space-x-4"}>
+        <Avatar
+          src={user?.image ? user.image : ""}
+          size={"lg"}
+          className={"hidden md:block"}
+        />
         <Input.TextArea
           onChange={(e) => setInput(e.target.value)}
           value={input}

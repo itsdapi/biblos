@@ -16,11 +16,11 @@ export default function BookItem({ className, ...props }: BookItemProps) {
     <Link href={`${config.path.bookDetail}/${props.bookId}`}>
       <div
         className={
-          "p-5 border w-56 space-y-4 rounded-md bg-background hover:shadow-bloom transition-shadow"
+          "p-5 border space-y-4 rounded-md bg-background hover:shadow-bloom transition-shadow"
         }
       >
         <Image
-          className={"w-full aspect-[9/10] object-cover rounded-md"}
+          className={"w-56 aspect-[9/10] object-cover rounded-md mx-auto"}
           src={props.cover ? props.cover : ""}
           alt={`${props.title} cover`}
           radius={"none"}

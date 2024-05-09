@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           className={"rounded-md w-[30rem]"}
           radius={"none"}
         />
-        <div className={"flex flex-col justify-between p-4 space-y-4"}>
+        <div className={"flex flex-col justify-between md:p-4 space-y-4"}>
           <div className={"space-y-4"}>
             <div className={"space-y-2"}>
               <p className={"text-4xl font-bold"}>{book.bookTitle}</p>

@@ -18,7 +18,7 @@ export default async function Header() {
     <div className={"border-b p-5"}>
       <div
         className={
-          "container mx-auto flex justify-between flex-row items-center"
+          "container mx-auto flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row items-center"
         }
       >
         <Link href={"/"}>
