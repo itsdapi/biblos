@@ -65,7 +65,7 @@ export async function getUserDiscount(): Promise<number> {
   }
   const level = await getLevelByXp(user.xp);
   // say user has reach max level, discount will be remain at the last level.
-  if (level > udd.length) {
+  if (level > udd.length - 1) {
     return udd.at(-1)!;
   }
   return udd[level];
