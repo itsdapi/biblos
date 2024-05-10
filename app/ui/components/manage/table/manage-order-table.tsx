@@ -49,6 +49,7 @@ export default function ManageOrderTable({ order }: { order: Order[] }) {
       columns={columns}
       dataSource={order}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     ></Table>
   );
 }

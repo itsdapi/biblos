@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Space, Table } from "antd";
+import { Button, Space, Table, TableProps } from "antd";
 import Link from "next/link";
 import { config } from "@/app.config";
 import { FaRegEdit } from "react-icons/fa";
@@ -8,7 +8,7 @@ import { IUser, Role } from "@/app/lib/type";
 import { Avatar } from "@nextui-org/react";
 
 export default function ManageUserTable({ users }: { users: IUser[] }) {
-  const columns = [
+  const columns: TableProps<IUser>["columns"] = [
     {
       title: "头像",
       dataIndex: "image",
@@ -65,6 +65,7 @@ export default function ManageUserTable({ users }: { users: IUser[] }) {
       columns={columns}
       dataSource={users}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     ></Table>
   );
 }

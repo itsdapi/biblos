@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table, TableProps } from "antd";
 import Link from "next/link";
 import { config } from "@/app.config";
 import { FaRegEdit } from "react-icons/fa";
@@ -12,7 +12,7 @@ import useExecutor from "@/app/lib/hook/use-executor";
 export default function ManagePressTable({ press }: { press: Press[] }) {
   const executor = useExecutor();
 
-  const columns = [
+  const columns: TableProps<Press>["columns"] = [
     {
       title: "出版社编号", // "Press Number"
       dataIndex: "pressNo",
@@ -56,7 +56,7 @@ export default function ManagePressTable({ press }: { press: Press[] }) {
     {
       title: "操作",
       key: "action",
-      render: (_: any, record: Press) => (
+      render: (_, record) => (
         <Space size="small">
           <Link href={`${config.path.editPress}/${record.id}`}>
             <Button icon={<FaRegEdit />} />
@@ -86,6 +86,7 @@ export default function ManagePressTable({ press }: { press: Press[] }) {
       columns={columns}
       dataSource={press}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     ></Table>
   );
 }

@@ -29,9 +29,10 @@ export default function CommentPrompt({
         <Avatar
           src={user?.image ? user.image : ""}
           size={"lg"}
-          className={"hidden md:block"}
+          className={"hidden md:block shrink-0"}
         />
         <Input.TextArea
+          disabled={!user}
           onChange={(e) => setInput(e.target.value)}
           value={input}
           className={"w-full"}
@@ -41,6 +42,7 @@ export default function CommentPrompt({
       </div>
       <div className={"flex flex-row justify-end"}>
         <Button
+          disabled={!user}
           type={"primary"}
           icon={<SendOutlined />}
           onClick={handleSubmit}

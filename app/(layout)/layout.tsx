@@ -3,23 +3,21 @@ import Header from "@/app/ui/header";
 import Footer from "@/app/ui/footer";
 
 export default function Layout({
-                                 children,
-                               }: Readonly<{
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
       <header>
-        <Header/>
+        <Header />
       </header>
-      <main className={"min-h-screen bg-muted/50"}>
-        <div className={"container mx-auto pt-5"}>
-          {children}
-        </div>
+      <main className={"min-h-screen bg-muted/50 overflow-x-hidden"}>
+        <div className={"container mx-auto pt-5"}>{children}</div>
       </main>
       <footer>
-        <Footer/>
+        <Footer />
       </footer>
     </>
-  )
+  );
 }

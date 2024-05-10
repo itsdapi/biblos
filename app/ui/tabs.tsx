@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { usePathname, useRouter } from "next/navigation";
 import { Tabs as TB } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 interface ITabs {
   key: string;
@@ -14,6 +15,7 @@ interface ITabs {
 export function Tabs({ items }: { items: ITabs[] }) {
   const router = useRouter();
   const pathname = usePathname();
+  const isMd = useMediaQuery({ query: "(max-width: 768px)" });
 
   const [active, setActive] = useState("1");
   useEffect(() => {
@@ -37,7 +39,7 @@ export function Tabs({ items }: { items: ITabs[] }) {
 
   return (
     <TB
-      tabPosition={"left"}
+      tabPosition={isMd ? "top" : "left"}
       items={items}
       onTabClick={handleChange}
       activeKey={active}

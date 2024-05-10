@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table, TableProps } from "antd";
 import { Book } from "@/app/lib/db/entities/Book";
 import Link from "next/link";
 import { config } from "@/app.config";
@@ -8,11 +8,12 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { deleteBookById } from "@/app/lib/action/book";
 import useExecutor from "@/app/lib/hook/use-executor";
+import { Order } from "@/app/lib/db/entities/Order";
 
 export default function ManageBookTable({ books }: { books: Book[] }) {
   const executor = useExecutor();
 
-  const columns = [
+  const columns: TableProps<Book>["columns"] = [
     {
       title: "ISBN",
       dataIndex: "ISBN",
@@ -36,7 +37,7 @@ export default function ManageBookTable({ books }: { books: Book[] }) {
     {
       title: "操作",
       key: "action",
-      render: (_: any, record: Book) => (
+      render: (_, record) => (
         <Space size="small">
           <Link href={`${config.path.editBook}/${record.id}`}>
             <Button icon={<FaRegEdit />} />
@@ -63,6 +64,7 @@ export default function ManageBookTable({ books }: { books: Book[] }) {
       columns={columns}
       dataSource={books}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     ></Table>
   );
 }

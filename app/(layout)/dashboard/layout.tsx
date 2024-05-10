@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { config } from "@/app.config";
 import { Tabs } from "@/app/ui/tabs";
 import DashboardStats from "@/app/ui/components/dashboard-stats";
+import { useMediaQuery } from "react-responsive";
 
 export default async function Layout({
   children,
@@ -55,7 +56,7 @@ export default async function Layout({
       <Suspense fallback={<div>Loading..</div>}>
         <DashboardStats />
       </Suspense>
-      <div className={"flex flex-row pb-20"}>
+      <div className={"flex flex-col md:flex-row pb-20"}>
         <Tabs items={items} />
         {children}
       </div>

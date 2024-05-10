@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table, TableProps } from "antd";
 import Link from "next/link";
 import { config } from "@/app.config";
 import { FaRegEdit } from "react-icons/fa";
@@ -16,7 +16,7 @@ export default function ManageExpressTable({
 }) {
   const executor = useExecutor();
 
-  const columns = [
+  const columns: TableProps<Express>["columns"] = [
     {
       title: "快递公司编号", // "Express Company Number"
       dataIndex: "expressNo",
@@ -60,7 +60,7 @@ export default function ManageExpressTable({
     {
       title: "操作",
       key: "action",
-      render: (_: any, record: Express) => (
+      render: (_, record) => (
         <Space size="small">
           <Link href={`${config.path.editExpress}/${record.id}`}>
             <Button icon={<FaRegEdit />} />
@@ -90,6 +90,7 @@ export default function ManageExpressTable({
       columns={columns}
       dataSource={express}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     ></Table>
   );
 }

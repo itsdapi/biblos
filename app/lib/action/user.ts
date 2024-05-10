@@ -51,7 +51,7 @@ export async function getLevelByXp(xp: number) {
     }
   }
   // Return the highest level + 1 if XP exceeds all defined thresholds
-  return xpThresholds.length + 1;
+  return xpThresholds.length;
 }
 
 export async function getUserDiscount(): Promise<number> {
@@ -64,6 +64,10 @@ export async function getUserDiscount(): Promise<number> {
     return 1;
   }
   const level = await getLevelByXp(user.xp);
+  // say user has reach max level, discount will be remain at the last level.
+  if (level > udd.length) {
+    return udd.at(-1)!;
+  }
   return udd[level];
 }
 

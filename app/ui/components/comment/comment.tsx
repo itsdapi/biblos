@@ -10,7 +10,7 @@ export default async function Comment({ postId }: { postId: number }) {
   const [comments] = await Promise.all([getCommentsById(postId)]);
   return (
     <div className={"w-full"}>
-      <h1 className={"text-3xl font-bold pb-3"}>评论</h1>
+      <h1 className={"text-3xl font-bold pb-5"}>评论</h1>
       <CommentPrompt user={user} postId={postId} />
       {comments.length !== 0 ? (
         <Divider />

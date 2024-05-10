@@ -17,7 +17,7 @@ export default async function DashboardStats() {
     ]);
 
   return (
-    <div className={"flex flex-row gap-4 border-b pb-6"}>
+    <div className={"flex flex-row gap-4 border-b pb-6 overflow-x-scroll"}>
       <CountBlock count={bookCount} text={"书本数量"} />
       <CountBlock count={pressCount} text={"出版社数量"} />
       <CountBlock count={userCount} text={"用户数量"} />

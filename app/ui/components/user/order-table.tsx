@@ -73,6 +73,7 @@ export default function OrderTable({
       pagination={{ total: totalPages, current: currentPage }}
       onChange={handleTableChange}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     />
   );
 }
