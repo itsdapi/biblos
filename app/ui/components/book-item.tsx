@@ -2,6 +2,7 @@ import React from "react";
 import { Image } from "@nextui-org/react";
 import Link from "next/link";
 import { config } from "@/app.config";
+import { InputNumber } from "antd";
 
 interface BookItemProps extends React.ComponentProps<"div"> {
   bookId: number;
@@ -11,7 +12,7 @@ interface BookItemProps extends React.ComponentProps<"div"> {
   cover?: string | null;
 }
 
-export default function BookItem({ className, ...props }: BookItemProps) {
+export function BookItem({ className, ...props }: BookItemProps) {
   return (
     <Link href={`${config.path.bookDetail}/${props.bookId}`}>
       <div

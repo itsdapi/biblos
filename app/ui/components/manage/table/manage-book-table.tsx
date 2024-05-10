@@ -30,6 +30,11 @@ export default function ManageBookTable({ books }: { books: Book[] }) {
       key: "author",
     },
     {
+      title: "出版社ID",
+      dataIndex: "pressId",
+      key: "pressId",
+    },
+    {
       title: "库存数量",
       dataIndex: "stockNumber",
       key: "stockNumber",

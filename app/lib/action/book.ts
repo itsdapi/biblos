@@ -33,6 +33,7 @@ export async function getAllBooks(
         "coverUrl",
         "stockNumber",
         "author",
+        "pressId",
       ],
     });
     const data = JSON.stringify(books);
@@ -160,5 +161,18 @@ export async function buyBook(bookId: number, quantity: number) {
   });
   await repo.save(newBook);
 
+  return;
+}
+
+export async function restockBook(bookId: number, quantity: number) {
+  const repo = await getBookRepository();
+  const book = await repo.findOne({ where: { id: bookId } });
+  if (!book) {
+    console.error("Book not found");
+    return;
+  }
+  book.stockNumber = book.stockNumber + quantity;
+  await repo.save(book);
+  revalidatePath(`${config.path.restockPress}/${bookId}`);
   return;
 }

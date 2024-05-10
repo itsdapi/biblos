@@ -38,6 +38,7 @@ export const config = {
     adminUser: "/dashboard/user",
     adminOrder: "/dashboard/order",
     adminPanel: "/dashboard",
+    restockPress: "/dashboard/press/restock",
     login: "/signin",
     bookDetail: "/book",
     cart: "/cart",

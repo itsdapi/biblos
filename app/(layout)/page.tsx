@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import BookList from "@/app/ui/components/book-list";
+import { IndexBookList } from "@/app/ui/components/book-list";
 import LoadingScreen from "@/app/ui/loading-screen";
 import { Carousel } from "antd";
 import { Image } from "@nextui-org/react";
@@ -23,7 +23,7 @@ export default async function Home() {
         ))}
       </Carousel>
       <Suspense fallback={<LoadingScreen />}>
-        <BookList />
+        <IndexBookList />
       </Suspense>
     </main>
   );

@@ -18,7 +18,7 @@ export default async function PressManage({
   const { adminPress, addPress } = config.path;
 
   return (
-    <div className={"space-y-4 w-full"}>
+    <div className={"space-y-4 w-full overflow-x-scroll"}>
       <TableHeader
         toPath={addPress}
         currPath={adminPress}

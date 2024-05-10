@@ -8,6 +8,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { Press } from "@/app/lib/db/entities/Press";
 import { deletePressById } from "@/app/lib/action/press";
 import useExecutor from "@/app/lib/hook/use-executor";
+import { TbPackageImport } from "react-icons/tb";
 
 export default function ManagePressTable({ press }: { press: Press[] }) {
   const executor = useExecutor();
@@ -60,6 +61,9 @@ export default function ManagePressTable({ press }: { press: Press[] }) {
         <Space size="small">
           <Link href={`${config.path.editPress}/${record.id}`}>
             <Button icon={<FaRegEdit />} />
+          </Link>
+          <Link href={`${config.path.restockPress}/${record.id}`}>
+            <Button icon={<TbPackageImport size={16} />} />
           </Link>
           <Popconfirm
             title="删除出版社"

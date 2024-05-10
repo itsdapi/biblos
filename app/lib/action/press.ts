@@ -6,6 +6,8 @@ import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
 import { Page } from "@/app/lib/type";
 import { unstable_noStore as noStore } from "next/cache";
+import { Book } from "@/app/lib/db/entities/Book";
+import { getBookRepository } from "@/app/lib/action/book";
 
 export async function getPressRepository() {
   noStore();
@@ -71,4 +73,31 @@ export async function deletePressById(id: number) {
   await repo.delete(id);
   revalidatePath(config.path.adminPress);
   return;
+}
+
+export async function getAllPressBook(
+  pressId: number,
+  skip: number,
+  limit: number,
+): Promise<Page<Book>> {
+  const bookRepository = await getBookRepository();
+  const [books, total] = await bookRepository.findAndCount({
+    where: { pressId },
+    select: [
+      "id",
+      "ISBN",
+      "bookTitle",
+      "price",
+      "coverUrl",
+      "stockNumber",
+      "author",
+    ],
+    skip,
+    take: limit,
+  });
+  const data = JSON.stringify(books);
+  return {
+    payload: JSON.parse(data),
+    total,
+  };
 }
