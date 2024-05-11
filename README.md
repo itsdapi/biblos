@@ -43,11 +43,13 @@ UI组件用的是 `Ant Degisn` 与 `NextUI`
 将填写好的环境变量文件改名成 `.env.local`
 
 ### 生成 `AUTH_SECRET`
+
 ```shell
 openssl rand -base64 32
 ```
 
 ### 使用Docker部署
+
 确保自己的 `.env.local` 文件已经创建好
 
 ```shell
@@ -65,21 +67,38 @@ docker-compose up -d --build
 ### 直接运行
 
 安装依赖
+
 ```shell
 npm i
 ```
 
 构建
+
 ```shell
 npm run build
 ```
 
 运行
+
 ```shell
 npm run standalone
 ```
 
 如果需要开发
+
 ```shell
 npm run dev
 ```
+
+### 修改业务参数
+
+如果需要修改如VIP升级规则需要去数据库的Setting表里面修改
+
+首次初始化数据库的默认值则会在 `app.config.ts` 中获取(懒的引到环境变量里面了orz)
+
+| key                       | 值                        | 说明         |
+|---------------------------|--------------------------|------------|
+| user_discount_definition  | [0.9, 0.8, 0.7, 0.6]     | 每一等级用户的折扣  |
+| money_to_xp_exchange_rate | [1000, 2000, 3000, 4000] | 每一级用户所需要经验 |
+| level_definition          | 10                       | 金额与经验兑换比例  |
+| index_images              | []                       | 首页轮播图      |

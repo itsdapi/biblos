@@ -49,4 +49,13 @@ export const config = {
   route: {
     protected: ["/dashboard"],
   },
+  app: {
+    user_discount_definition: [0.9, 0.8, 0.7, 0.6],
+    level_definition: [1000, 2000, 3000, 4000],
+    money_to_xp_exchange_rate: 10,
+    index_images: [
+      "https://biblos-image-r2.itsp3.space/WechatIMG446.jpg",
+      "https://biblos-image-r2.itsp3.space/WechatIMG441.jpg",
+    ],
+  },
 };
