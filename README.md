@@ -18,6 +18,8 @@ UI组件用的是 `Ant Degisn` 与 `NextUI`
 
 ## 如何部署
 
+需要准备一个在线的 `Oracle` 数据库，并且创建好专门给本应用的数据库，以及一个有基本权限的帐户
+
 复制一份 `.env.template` 文件，填写里面的各种OAuth提供方的ID和Secret，不需要的话也可以不填
 
 | key                | 值                        |
@@ -40,7 +42,7 @@ UI组件用的是 `Ant Degisn` 与 `NextUI`
 
 将填写好的环境变量文件改名成 `.env.local`
 
-#### 生成 `AUTH_SECRET`
+### 生成 `AUTH_SECRET`
 ```shell
 openssl rand -base64 32
 ```
