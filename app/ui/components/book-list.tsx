@@ -5,9 +5,9 @@ import usePageOptions from "@/app/lib/hook/use-page-option";
 import { getAllPressBook } from "@/app/lib/action/press";
 import { Empty } from "antd";
 import { RestockBookItem } from "@/app/ui/components/manage/restock-book-item";
+import { Book } from "@/app/lib/db/entities/Book";
 
-export async function IndexBookList() {
-  const [{ payload: books, total }] = await Promise.all([getAllBooks(0, 10)]);
+export async function BookList({ books }: { books: Book[] }) {
   return books.length !== 0 ? (
     <div
       className={
@@ -28,6 +28,11 @@ export async function IndexBookList() {
   ) : (
     <Empty />
   );
+}
+
+export async function IndexBookList() {
+  const [{ payload: books, total }] = await Promise.all([getAllBooks(0, 10)]);
+  return <BookList books={books} />;
 }
 
 export async function RestockBookList({

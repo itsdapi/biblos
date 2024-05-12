@@ -176,3 +176,7 @@ export async function restockBook(bookId: number, quantity: number) {
   revalidatePath(`${config.path.restockPress}/${bookId}`);
   return;
 }
+
+// export async function searchBook(term: string): Promise<Page<Book>> {
+//   const repo = await getBookRepository();
+// }

@@ -9,6 +9,7 @@ import { RxDashboard } from "react-icons/rx";
 import HomeButton from "@/app/ui/button/home-button";
 import { MdShoppingCart } from "react-icons/md";
 import { config } from "@/app.config";
+import SearchPrompt from "@/app/ui/search-prompt";
 
 export default async function Header() {
   const session = await auth();
@@ -21,9 +22,12 @@ export default async function Header() {
           "container mx-auto flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row items-center"
         }
       >
-        <Link href={"/"}>
-          <h1 className={"font-bold text-2xl"}>biblos 在线书店</h1>
-        </Link>
+        <div className={"flex flex-row space-x-2 items-center"}>
+          <Link href={"/"} className={"shrink-0"}>
+            <h1 className={"font-bold text-2xl"}>biblos 在线书店</h1>
+          </Link>
+          <SearchPrompt />
+        </div>
         {session ? (
           <div className={"flex gap-4 items-center"}>
             <UserInfo user={user} />

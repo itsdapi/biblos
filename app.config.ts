@@ -45,6 +45,7 @@ export const config = {
     checkoutSuccess: "/cart/result",
     order: "/profile/order",
     profile: "/profile",
+    search: "/search",
   },
   route: {
     protected: ["/dashboard"],
