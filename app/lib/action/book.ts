@@ -6,7 +6,7 @@ import { getPressDetailById } from "@/app/lib/action/press";
 import { revalidatePath } from "next/cache";
 import { config } from "@/app.config";
 import { Page } from "@/app/lib/type";
-import { In } from "typeorm";
+import { In, Like } from "typeorm";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function getBookRepository() {
@@ -177,6 +177,39 @@ export async function restockBook(bookId: number, quantity: number) {
   return;
 }
 
-// export async function searchBook(term: string): Promise<Page<Book>> {
-//   const repo = await getBookRepository();
-// }
+export async function searchBook(term: string): Promise<Page<Book>> {
+  noStore();
+  try {
+    const bookRepository = await getBookRepository();
+    // 使用模糊查询来搜索书名或作者包含term的书籍
+    const [books, total] = await bookRepository.findAndCount({
+      where: [
+        { bookTitle: Like(`%${term}%`) }, // 搜索书名
+        { author: Like(`%${term}%`) }, // 搜索作者
+      ],
+      skip: 0,
+      take: 10, // 假设每次搜索最多返回10条结果，可以根据需要调整
+      select: [
+        "id",
+        "ISBN",
+        "bookTitle",
+        "price",
+        "coverUrl",
+        "stockNumber",
+        "author",
+        "pressId",
+      ],
+    });
+
+    return {
+      total,
+      payload: books,
+    };
+  } catch (error) {
+    console.error("Search books failed:", error);
+    return {
+      total: 0,
+      payload: [],
+    };
+  }
+}
