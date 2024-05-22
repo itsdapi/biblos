@@ -22,7 +22,7 @@ export default async function Header() {
           "container mx-auto flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row items-center"
         }
       >
-        <div className={"flex flex-row space-x-2 items-center"}>
+        <div className={"flex flex-row space-x-4 items-center"}>
           <Link href={"/"} className={"shrink-0"}>
             <h1 className={"font-bold text-2xl"}>biblos 在线书店</h1>
           </Link>

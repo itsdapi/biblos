@@ -8,6 +8,7 @@ import { config } from "@/app.config";
 import { Page } from "@/app/lib/type";
 import { In, Like } from "typeorm";
 import { unstable_noStore as noStore } from "next/cache";
+import { isBlank } from "@/app/lib/utils";
 
 export async function getBookRepository() {
   noStore();
@@ -177,7 +178,18 @@ export async function restockBook(bookId: number, quantity: number) {
   return;
 }
 
-export async function searchBook(term: string): Promise<Page<Book>> {
+export async function searchBook(
+  skip: number,
+  limit: number,
+  term?: string,
+): Promise<Page<Book>> {
+  if (!term || isBlank(term)) {
+    return {
+      total: 0,
+      payload: [],
+    };
+  }
+
   noStore();
   try {
     const bookRepository = await getBookRepository();
@@ -187,8 +199,8 @@ export async function searchBook(term: string): Promise<Page<Book>> {
         { bookTitle: Like(`%${term}%`) }, // 搜索书名
         { author: Like(`%${term}%`) }, // 搜索作者
       ],
-      skip: 0,
-      take: 10, // 假设每次搜索最多返回10条结果，可以根据需要调整
+      skip,
+      take: limit,
       select: [
         "id",
         "ISBN",
@@ -200,10 +212,11 @@ export async function searchBook(term: string): Promise<Page<Book>> {
         "pressId",
       ],
     });
+    const data = JSON.stringify(books);
 
     return {
       total,
-      payload: books,
+      payload: JSON.parse(data),
     };
   } catch (error) {
     console.error("Search books failed:", error);
