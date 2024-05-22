@@ -31,7 +31,7 @@ export async function BookList({ books }: { books: Book[] }) {
 }
 
 export async function IndexBookList() {
-  const [{ payload: books, total }] = await Promise.all([getAllBooks(0, 10)]);
+  const [{ payload: books, total }] = await Promise.all([getAllBooks(0, 50)]);
   return <BookList books={books} />;
 }
 
