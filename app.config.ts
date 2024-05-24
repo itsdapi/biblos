@@ -46,6 +46,7 @@ export const config = {
     order: "/profile/order",
     profile: "/profile",
     search: "/search",
+    about: "/about",
   },
   route: {
     protected: ["/dashboard"],

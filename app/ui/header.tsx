@@ -26,8 +26,17 @@ export default async function Header() {
           <Link href={"/"} className={"shrink-0"}>
             <h1 className={"font-bold text-2xl"}>biblos 在线书店</h1>
           </Link>
-          <SearchPrompt />
+          <p>/</p>
+          <Link
+            href={config.path.about}
+            className={
+              "shrink-0 font-light hover:underline underline-offset-1 transition-all"
+            }
+          >
+            关于我们
+          </Link>
         </div>
+        <SearchPrompt />
         {session ? (
           <div className={"flex gap-4 items-center"}>
             <UserInfo user={user} />

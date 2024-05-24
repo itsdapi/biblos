@@ -16,10 +16,12 @@ export default function SearchPrompt() {
   }, 300);
 
   return (
-    <Input.Search
-      placeholder={"尝试搜索一本书吧"}
-      onChange={(e) => handleSearch(e.target.value)}
-      onSearch={handleSearch}
-    />
+    <div className={"w-56"}>
+      <Input.Search
+        placeholder={"尝试搜索一本书吧"}
+        onChange={(e) => handleSearch(e.target.value)}
+        onSearch={handleSearch}
+      />
+    </div>
   );
 }
